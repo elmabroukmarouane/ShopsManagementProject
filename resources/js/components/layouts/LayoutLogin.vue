@@ -7,7 +7,12 @@
                 <div class="text-center">
                     <img src="assets/images/logo-icon.png">
                 </div>
-            <div class="card-title text-uppercase text-center py-3">Sign In</div>
+            <div class="nav-get-started" v-if="this.$route.name == 'Login'">
+                <div class="card-title text-uppercase text-center py-3">Sign In</div>
+            </div>
+            <div class="nav-get-started" v-else-if="this.$route.name == 'Register'">
+                <div class="card-title text-uppercase text-center py-3">Sign Up</div>
+            </div>
             <router-view></router-view>
             </div>
             </div>

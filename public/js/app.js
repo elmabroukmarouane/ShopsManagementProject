@@ -50332,6 +50332,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
@@ -50358,11 +50363,29 @@ var render = function() {
             [
               _vm._m(0),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "card-title text-uppercase text-center py-3" },
-                [_vm._v("Sign In")]
-              ),
+              this.$route.name == "Login"
+                ? _c("div", { staticClass: "nav-get-started" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "card-title text-uppercase text-center py-3"
+                      },
+                      [_vm._v("Sign In")]
+                    )
+                  ])
+                : this.$route.name == "Register"
+                  ? _c("div", { staticClass: "nav-get-started" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "card-title text-uppercase text-center py-3"
+                        },
+                        [_vm._v("Sign Up")]
+                      )
+                    ])
+                  : _vm._e(),
               _vm._v(" "),
               _c("router-view")
             ],
@@ -50518,7 +50541,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   methods: {
     init_validate_signin_form: function init_validate_signin_form() {
-      $("#signupForm").validate({
+      $("#signinForm").validate({
         rules: {
           email: {
             required: true,
@@ -50576,7 +50599,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "form",
-    { attrs: { id: "signupForm", action: "javascript:void(0)" } },
+    { attrs: { id: "signinForm", action: "javascript:void(0)" } },
     [
       _c("div", { class: _vm.color_alert, attrs: { role: "alert" } }, [
         _c("div", { class: _vm.icon_alert }, [
@@ -50654,8 +50677,7 @@ var render = function() {
               type: "password",
               name: "password",
               id: "password",
-              placeholder: "Password",
-              required: ""
+              placeholder: "Password"
             },
             domProps: { value: _vm.password },
             on: {
@@ -50693,7 +50715,23 @@ var render = function() {
         [_vm._v("Sign In")]
       ),
       _vm._v(" "),
-      _vm._m(3)
+      _c("div", { staticClass: "text-center pt-3" }, [
+        _c("p", { staticClass: "text-muted" }, [
+          _vm._v("Do not have an account? "),
+          _c(
+            "a",
+            {
+              attrs: { href: "javascript:void(0)" },
+              on: {
+                click: function($event) {
+                  _vm.$router.push({ path: "/auth/register" })
+                }
+              }
+            },
+            [_vm._v(" Sign Up here")]
+          )
+        ])
+      ])
     ]
   )
 }
@@ -50729,19 +50767,6 @@ var staticRenderFns = [
           _c("label", { attrs: { for: "user-checkbox" } }, [
             _vm._v("Remember me")
           ])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center pt-3" }, [
-      _c("p", { staticClass: "text-muted" }, [
-        _vm._v("Do not have an account? "),
-        _c("a", { attrs: { href: "authentication-signup.html" } }, [
-          _vm._v(" Sign Up here")
         ])
       ])
     ])
@@ -50849,20 +50874,81 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      color_alert: "mb-5 mr-auto alert alert-primary",
+      color_alert: "alert alert-icon-info alert-dismissible alert-round",
+      icon_alert: "alert-icon icon-part-info icon-part-round",
       msg_login_success: "Please fill all the information below !",
       name: "",
       email: "",
       password: "",
+      confirm_password: "",
       address: ""
     };
   },
+  mounted: function mounted() {
+    this.init_validate_signup_form();
+  },
 
   methods: {
+    init_validate_signup_form: function init_validate_signup_form() {
+      $("#signupForm").validate({
+        rules: {
+          name: "required",
+          email: {
+            required: true,
+            email: true
+          },
+          password: {
+            required: true,
+            minlength: 6
+          },
+          confirm_password: {
+            required: true,
+            minlength: 6,
+            equalTo: "#password"
+          },
+          address: "required"
+        },
+        messages: {
+          name: "Please enter your First & Lastname",
+          email: {
+            required: "Please enter your email address",
+            email: "Please enter a valid email address"
+          },
+          password: {
+            required: "Please provide a password",
+            minlength: "Your password must be at least 6 characters long"
+          },
+          confirm_password: {
+            required: "Please provide a password",
+            minlength: "Your password must be at least 6 characters long",
+            equalTo: "Please enter the same password as above"
+          },
+          address: "Please enter your address"
+        }
+      });
+    },
     register: function register() {
       var _this = this;
 
@@ -50873,12 +50959,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           password: this.password,
           address: this.address
         }).then(function (response) {
-          _this.color_alert = "mb-5 mr-auto alert alert-success";
+          _this.color_alert = "alert alert-icon-success alert-dismissible alert-round";
+          _this.icon_alert = "alert-icon icon-part-success icon-part-round";
           _this.msg_login_success = response.data.msg;
           setTimeout(_this.redirectFunction, 2000);
         }).catch(function (error) {
-          _this.$refs.form.reset();
-          _this.color_alert = "mb-5 mr-auto alert alert-danger";
+          _this.email = "";
+          _this.password = "";
+          _this.color_alert = "alert alert-icon-danger alert-dismissible alert-round";
+          _this.icon_alert = "alert-icon icon-part-danger icon-part-round";
           _this.msg_login_success = error.response.data.msg;
         });
       }
@@ -50897,152 +50986,211 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("form", { ref: "form", attrs: { action: "javascript:void(0)" } }, [
-    _c("h3", { staticClass: "mr-auto" }, [_vm._v("Register")]),
-    _vm._v(" "),
-    _c("br"),
-    _vm._v(" "),
-    _c("div", { class: _vm.color_alert, attrs: { role: "alert" } }, [
-      _vm._v(
-        "\n                " +
-          _vm._s(_vm.msg_login_success) +
-          "\n                "
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("div", { staticClass: "input-group" }, [
-        _vm._m(0),
+  return _c(
+    "form",
+    { attrs: { id: "signupForm", action: "javascript:void(0)" } },
+    [
+      _c("div", { class: _vm.color_alert, attrs: { role: "alert" } }, [
+        _c("div", { class: _vm.icon_alert }, [
+          _c("i", { staticClass: "icon-info" })
+        ]),
         _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.name,
-              expression: "name"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            name: "name",
-            placeholder: "Firstname & Lastname",
-            required: ""
-          },
-          domProps: { value: _vm.name },
-          on: {
-            keyup: function($event) {
-              if (
-                !("button" in $event) &&
-                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-              ) {
-                return null
+        _c("div", { staticClass: "alert-message" }, [
+          _c("span", [_c("strong", [_vm._v(_vm._s(_vm.msg_login_success))])])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("div", { staticClass: "position-relative has-icon-right" }, [
+          _c("label", { staticClass: "sr-only", attrs: { for: "name" } }, [
+            _vm._v("Name")
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.name,
+                expression: "name"
               }
-              _vm.register()
+            ],
+            staticClass: "form-control form-control-rounded",
+            attrs: {
+              type: "text",
+              id: "name",
+              name: "name",
+              placeholder: "Firstname & Lastname"
             },
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+            domProps: { value: _vm.name },
+            on: {
+              keyup: function($event) {
+                if (
+                  !("button" in $event) &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                _vm.register()
+              },
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.name = $event.target.value
               }
-              _vm.name = $event.target.value
             }
-          }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("div", { staticClass: "input-group" }, [
-        _vm._m(1),
+          }),
+          _vm._v(" "),
+          _vm._m(0)
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("div", { staticClass: "position-relative has-icon-right" }, [
+          _c("label", { staticClass: "sr-only", attrs: { for: "email" } }, [
+            _vm._v("Email")
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.email,
+                expression: "email"
+              }
+            ],
+            staticClass: "form-control form-control-rounded",
+            attrs: {
+              type: "email",
+              name: "email",
+              id: "email",
+              placeholder: "E-mail address"
+            },
+            domProps: { value: _vm.email },
+            on: {
+              keyup: function($event) {
+                if (
+                  !("button" in $event) &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                _vm.register()
+              },
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.email = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm._m(1)
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("div", { staticClass: "position-relative has-icon-right" }, [
+          _c("label", { staticClass: "sr-only", attrs: { for: "password" } }, [
+            _vm._v("Password")
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.password,
+                expression: "password"
+              }
+            ],
+            staticClass: "form-control form-control-rounded",
+            attrs: {
+              type: "password",
+              name: "password",
+              id: "password",
+              placeholder: "Password"
+            },
+            domProps: { value: _vm.password },
+            on: {
+              keyup: function($event) {
+                if (
+                  !("button" in $event) &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                _vm.register()
+              },
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.password = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm._m(2)
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("div", { staticClass: "position-relative has-icon-right" }, [
+          _c(
+            "label",
+            { staticClass: "sr-only", attrs: { for: "confirm_password" } },
+            [_vm._v("Retry Password")]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.confirm_password,
+                expression: "confirm_password"
+              }
+            ],
+            staticClass: "form-control form-control-rounded",
+            attrs: {
+              type: "password",
+              name: "confirm_password",
+              id: "confirm_password",
+              placeholder: "Retry Password"
+            },
+            domProps: { value: _vm.confirm_password },
+            on: {
+              keyup: function($event) {
+                if (
+                  !("button" in $event) &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                _vm.register()
+              },
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.confirm_password = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm._m(3)
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group row" }, [
+        _c("label", { staticClass: "sr-only", attrs: { for: "address" } }, [
+          _vm._v("Address")
+        ]),
         _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.email,
-              expression: "email"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: {
-            name: "email",
-            placeholder: "E-mail address",
-            type: "email",
-            required: ""
-          },
-          domProps: { value: _vm.email },
-          on: {
-            keyup: function($event) {
-              if (
-                !("button" in $event) &&
-                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-              ) {
-                return null
-              }
-              _vm.register()
-            },
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.email = $event.target.value
-            }
-          }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("div", { staticClass: "input-group" }, [
-        _vm._m(2),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.password,
-              expression: "password"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: {
-            type: "password",
-            name: "password",
-            placeholder: "Password",
-            required: ""
-          },
-          domProps: { value: _vm.password },
-          on: {
-            keyup: function($event) {
-              if (
-                !("button" in $event) &&
-                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-              ) {
-                return null
-              }
-              _vm.register()
-            },
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.password = $event.target.value
-            }
-          }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "form-group",
-        staticStyle: { border: "1px solid #e5e5e5", "border-radius": "6px" }
-      },
-      [
         _c("textarea", {
           directives: [
             {
@@ -51052,13 +51200,8 @@ var render = function() {
               expression: "address"
             }
           ],
-          staticClass: "form-control",
-          attrs: {
-            name: "address",
-            id: "address",
-            placeholder: "Address",
-            required: ""
-          },
+          staticClass: "form-control form-control-rounded",
+          attrs: { name: "address", id: "address", placeholder: "Address" },
           domProps: { value: _vm.address },
           on: {
             keyup: function($event) {
@@ -51078,54 +51221,74 @@ var render = function() {
             }
           }
         })
-      ]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
+      ]),
+      _vm._v(" "),
       _c(
         "button",
         {
-          staticClass: "btn btn-primary submit-btn",
+          staticClass:
+            "btn btn-primary shadow-primary btn-round btn-block waves-effect waves-light",
+          attrs: { type: "submit" },
           on: {
             click: function($event) {
               _vm.register()
             }
           }
         },
-        [_vm._v("SIGN UP")]
-      )
-    ])
-  ])
+        [_vm._v("Sign Up")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "text-center pt-3" }, [
+        _c("p", { staticClass: "text-muted" }, [
+          _vm._v("Already have an account? "),
+          _c(
+            "a",
+            {
+              attrs: { href: "javascript:void(0)" },
+              on: {
+                click: function($event) {
+                  _vm.$router.push({ path: "/auth/login" })
+                }
+              }
+            },
+            [_vm._v(" Sign In here")]
+          )
+        ])
+      ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group-prepend" }, [
-      _c("span", { staticClass: "input-group-text" }, [
-        _c("i", { staticClass: "icon-user" })
-      ])
+    return _c("div", { staticClass: "form-control-position" }, [
+      _c("i", { staticClass: "icon-user" })
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group-prepend" }, [
-      _c("span", { staticClass: "input-group-text" }, [
-        _c("i", { staticClass: "icon-user" })
-      ])
+    return _c("div", { staticClass: "form-control-position" }, [
+      _c("i", { staticClass: "icon-envelope-open" })
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group-prepend" }, [
-      _c("span", { staticClass: "input-group-text" }, [
-        _c("i", { staticClass: "icon-lock" })
-      ])
+    return _c("div", { staticClass: "form-control-position" }, [
+      _c("i", { staticClass: "icon-lock" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-control-position" }, [
+      _c("i", { staticClass: "icon-lock" })
     ])
   }
 ]

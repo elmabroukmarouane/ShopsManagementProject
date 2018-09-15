@@ -1,5 +1,5 @@
 <template>
-<form id="signupForm" action="javascript:void(0)">
+<form id="signinForm" action="javascript:void(0)">
               <div :class="color_alert" role="alert">
                 <!-- <button type="button" class="close" data-dismiss="alert">×</button> -->
                   <div :class="icon_alert">
@@ -21,7 +21,7 @@
                 <div class="form-group">
                 <div class="position-relative has-icon-right">
                     <label for="password" class="sr-only">Password</label>
-                    <input v-on:keyup.enter="login()" v-model="password" type="password" name="password" id="password" class="form-control form-control-rounded" placeholder="Password" required>
+                    <input v-on:keyup.enter="login()" v-model="password" type="password" name="password" id="password" class="form-control form-control-rounded" placeholder="Password">
                     <div class="form-control-position">
                         <i class="icon-lock"></i>
                     </div>
@@ -37,7 +37,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary shadow-primary btn-round btn-block waves-effect waves-light">Sign In</button>
                 <div class="text-center pt-3">
-                    <p class="text-muted">Do not have an account? <a href="authentication-signup.html"> Sign Up here</a></p>
+                    <p class="text-muted">Do not have an account? <a href="javascript:void(0)" @click="$router.push({ path: '/auth/register' })"> Sign Up here</a></p>
                 </div>
                 </form>
 </template>
@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     init_validate_signin_form() {
-      $("#signupForm").validate({
+      $("#signinForm").validate({
         rules: {
           email: {
             required: true,
