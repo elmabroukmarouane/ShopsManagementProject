@@ -1,11 +1,13 @@
 <template>
-     <!-- partial:partials/_footer.html -->
-        <footer class="footer">
-          <div class="w-100 clearfix text-center">
+    <!--Start footer-->
+    <footer class="footer">
+        <div class="container">
+          <div class="text-center">
             <p class="footer-text">{{ this.date_now | moment }} - Shops Management Project by <a href="mailto:elmabroukmarouane@gmail.com">Marouane EL MABROUK</a>.</p>
           </div>
-        </footer>
-        <!-- partial -->
+        </div>
+      </footer>
+    <!--End footer-->
 </template>
 
 <script>

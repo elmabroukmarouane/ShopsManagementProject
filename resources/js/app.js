@@ -13,7 +13,11 @@ import {
 const app = new Vue({
     el: '#app',
     router,
-    data() {},
+    data() {
+        return {
+            table: ''
+        }
+    },
     created() {
         Event.$on('logout-app', () => {
             this.logoutApp();
@@ -22,9 +26,9 @@ const app = new Vue({
     methods: {
         logoutApp() {
             $('#logout-modal').modal('hide');
-            axios.post('logout')
+            axios.get('logout')
                 .then((response) => {
-                    location.reload()
+                    location.reload();
                 });
         }
     }
