@@ -22,9 +22,9 @@ const routes = [{
         component: require('./components/layouts/LayoutApp.vue'),
         beforeEnter: requireAuth,
         children: [{
-            name: 'Home',
-            path: '/home',
-            component: require('./components/Home.vue'),
+            name: 'Nearby Shops',
+            path: '/nearby-shops',
+            component: require('./components/shops/Nshops.vue'),
         }],
     },
     {

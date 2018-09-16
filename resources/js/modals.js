@@ -1,1 +1,1 @@
-//Vue.component('logout-modal', require('./modals/ModalLogout.vue'));
+Vue.component('logout-modal', require('./modals/ModalLogout.vue'));
