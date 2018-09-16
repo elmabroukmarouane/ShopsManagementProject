@@ -8,6 +8,10 @@ use Auth;
 
 class ListprefrredshopsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +19,13 @@ class ListprefrredshopsController extends Controller
      */
     public function index()
     {
-        //
+        $shops = Listprefrredshop::join('shops', 'shops.id', '=', 'listprefrredshops.shop_id')
+                    ->select('listprefrredshops.id', 'listprefrredshops.shop_id', 'shops.name', 'shops.image', 'shops.address')
+                    ->where('listprefrredshops.user_id', '=', Auth::id())
+                    ->get();
+        return response()->json([
+            'shops'    => $shops,
+        ], 200);
     }
 
     /**
@@ -88,6 +98,15 @@ class ListprefrredshopsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $result = Listprefrredshop::where('id','=', $id)->delete();
+        if($result){
+            return response()->json([
+                'message' => 'Shop removed from preferred list successfully !'
+            ], 200);
+        }else{
+            return response()->json([
+                'message' => 'Action Failed  !'
+            ], 200);
+        }
     }
 }

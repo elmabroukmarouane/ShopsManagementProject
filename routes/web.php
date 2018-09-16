@@ -25,6 +25,7 @@ Route::post('register', 'Auth\LoginController@register');
 
 /* ------------------ Shops ------------------- */
 Route::resource('shops', 'ShopsController');
+Route::get('shops-list', 'ShopsController@shops_list');
 /* ------------------ Shops ------------------- */
 
 /* ------------------ preferred shops list ------------------- */
@@ -41,6 +42,7 @@ Route::get('is-logged', function(){
     if (Auth::check()) {
         return response()->json([
                 'name_user' => Auth::user()->name,
+                'role' => Auth::user()->role,
                 'auth_check' => true
             ], 200);
     }

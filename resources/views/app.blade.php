@@ -12,6 +12,10 @@
         <title>Rocker - Bootstrap4  Admin Dashboard Template</title>
         <!--favicon-->
         <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+        <!--Data Tables -->
+        <link href="assets/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+        <!--Lightbox Css-->
+        <link href="assets/plugins/fancybox/css/jquery.fancybox.min.css" rel="stylesheet" type="text/css"/>
         <!-- simplebar CSS-->
         <link href="assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
         <!-- Bootstrap core CSS-->
@@ -47,6 +51,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
         <!--Sweet Alerts -->
         <script src="assets/plugins/alerts-boxes/js/sweetalert.min.js"></script>
+        <!--Data Tables js-->
+        <script src="assets/plugins/bootstrap-datatable/js/jquery.dataTables.min.js"></script>
+        <script src="assets/plugins/bootstrap-datatable/js/dataTables.bootstrap4.min.js"></script>
+        <!--Lightbox-->
+        <script src="assets/plugins/fancybox/js/jquery.fancybox.min.js"></script>
         <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>

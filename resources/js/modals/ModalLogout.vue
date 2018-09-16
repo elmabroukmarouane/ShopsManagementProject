@@ -12,7 +12,7 @@
         </div>
         <div slot="footer_modal" class="modal-footer">
             <button type="button" class="btn btn-success" data-dismiss="modal">Nope :D !</button>
-            <button@click="logout()" type="button" class="btn btn-danger">Yeah, I'm sure :'( !</button>
+            <button @click="logout()" type="button" class="btn btn-danger">Yeah, I'm sure :'( !</button>
         </div>
     </parts-modal-logout>
     <!-- End Modal Logout -->

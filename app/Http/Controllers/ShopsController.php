@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Shop;
 use App\Shopsdislike;
 use App\Listprefrredshop;
+use File;
 use Auth;
 use DB;
 
@@ -92,6 +93,14 @@ class ShopsController extends Controller
         ], 200);
     }
 
+    public function shops_list()
+    {
+        $shops = Shop::orderBy('id', 'DESC')->get();
+        return response()->json([
+            'shops'    => $shops,
+        ], 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -110,7 +119,29 @@ class ShopsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $image = $request->file('selectedImage');
+        if(File::isFile($image)){
+            $path = public_path('/assets/images/gallery/');
+            $nom_image = $request->name . "_" . str_random(8) . "." . $image->getClientOriginalExtension();
+            $image->move($path, $nom_image);
+        }
+        
+        $shop = new Shop();
+        $shop->name = $request->name;
+        $shop->image = $nom_image;
+        $shop->address = $request->address;
+
+        $result_shop = $shop->saveOrFail();
+        if($result_shop){
+            return response()->json([
+                'shop' => $shop,
+                'msg' => 'Shop created successfully !'
+            ], 200);
+        }else{
+            return response()->json([
+                'msg' => 'Something went wrong. Failed action !'
+            ], 500);
+        }
     }
 
     /**
@@ -139,12 +170,39 @@ class ShopsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Shop $shop
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Shop $shop)
     {
-        //
+        $shop->name = $request->name;
+        $shop->address = $request->address;
+
+        $image = $request->file('selectedImage');
+        if(File::isFile($image)){
+            $path = public_path('/assets/images/gallery/');
+            if(file_exists($path . $shop->image))
+            {
+                File::Delete($path . $shop->image);
+            }
+            $nom_image = $request->name . "_" . str_random(8) . "." . $image->getClientOriginalExtension();
+            $image->move($path, $nom_image);
+            $shop->image = $nom_image;
+        }
+        
+        $result_shop = $shop->saveOrFail();
+        if($result_shop){
+            return response()->json([
+                'msg' => 'Shop updated successfully !'
+            ], 200);
+        }else{
+            return response()->json([
+                'msg' => 'Something went wrong. Failed action !'
+            ], 500);
+        }
+        return response()->json([
+            'message' => 'User updated successfully!'
+        ], 200);
     }
 
     /**
@@ -155,6 +213,21 @@ class ShopsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $shop = Shop::find($id);
+        $pathImage = public_path('/assets/images/gallery/') . $shop->image;
+        if(file_exists($pathImage))
+        {
+            File::Delete($pathImage);
+        }
+        $result = Shop::where('id','=', $id)->delete();
+        if($result){
+            return response()->json([
+                'message' => 'Shop removed successfully !'
+            ], 200);
+        }else{
+            return response()->json([
+                'message' => 'Action Failed  !'
+            ], 200);
+        }
     }
 }

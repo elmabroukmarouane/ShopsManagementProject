@@ -9,10 +9,23 @@
     </div>
     <ul class="sidebar-menu do-nicescrol">
         <li class="sidebar-header">MENU PROJECT</li>
-        <li>
+        <li :class="[$route.name == 'Nearby Shops' ? 'active':'']">
           <a href="javascript:void(0)" class="waves-effect" @click="$router.push({ path: '/nearby-shops' })">
             <i class="fa fa-shopping-basket"></i> <span>Nearby Shops</span>
           </a>
+        </li>
+        <li :class="[$route.name == 'My Preferred Shops' ? 'active':'']">
+          <a href="javascript:void(0)" class="waves-effect" @click="$router.push({ path: '/preferred-shops' })">
+            <i class="fa fa-heart"></i> <span>My Preferred Shops</span>
+          </a>
+        </li>
+        <li :class="[$route.name == 'Shops Management' ? 'active':'']" v-if="role == 'super_admin'">
+          <a href="javascrip:void(0)" class="waves-effect">
+            <i class="fa fa-gears"></i> <span>Configurations</span> <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="sidebar-submenu">
+            <li :class="[$route.name == 'Shops Management' ? 'active':'']"><a href="javascript:void(0)" @click="$router.push({ path: '/shops-management' })"><i class="fa fa-shopping-cart"></i> Shops Management</a></li>
+          </ul>
         </li>
       </ul>
     
@@ -22,6 +35,20 @@
 
 <script>
 export default {
-  mounted() {}
+  data() {
+    return {
+      role: ""
+    };
+  },
+  mounted() {
+    this.getroleLogged();
+  },
+  methods: {
+    getroleLogged() {
+      axios.get("is-logged").then(response => {
+        this.role = response.data.role;
+      });
+    }
+  }
 };
 </script>

@@ -19,6 +19,18 @@ const app = new Vue({
         }
     },
     created() {
+        Event.$on('init-datatable', (tableid) => {
+            this.datatableThis(tableid);
+        });
+        Event.$on('destroy-datatable', () => {
+            this.destroyThis();
+        });
+        Event.$on('show-modal-normal', (modalid) => {
+            this.showModalNormal(modalid);
+        });
+        Event.$on('hide-modal-normal', (modalid) => {
+            this.hideModalNormal(modalid);
+        });
         Event.$on('logout-app', () => {
             this.logoutApp();
         });
@@ -27,6 +39,18 @@ const app = new Vue({
         });
     },
     methods: {
+        datatableThis(tableid) {
+            this.table = $('#' + tableid).DataTable();
+        },
+        destroyThis() {
+            this.table.destroy();
+        },
+        showModalNormal(modalid) {
+            $("#" + modalid).modal("show");
+        },
+        hideModalNormal(modalid) {
+            $("#" + modalid).modal("hide");
+        },
         logoutApp() {
             $('#logout-modal').modal('hide');
             axios.get('logout')
