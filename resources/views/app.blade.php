@@ -45,6 +45,8 @@
         <!-- Custom scripts -->
         <script src="assets/js/app-script.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+        <!--Sweet Alerts -->
+        <script src="assets/plugins/alerts-boxes/js/sweetalert.min.js"></script>
         <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>

@@ -4,6 +4,13 @@
 
 <script>
 export default {
-  mounted() {}
+  /* mounted() {
+    this.goNearByShops();
+  },
+  methods: {
+    goNearByShops() {
+      this.$router.push({ path: "/nearby-shops" });
+    }
+  } */
 };
 </script>

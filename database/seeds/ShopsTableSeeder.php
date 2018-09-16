@@ -16,16 +16,16 @@ class ShopsTableSeeder extends Seeder
         $faker = Faker::create();
         $city_array = ['Tanger', 'Assilah', 'Larache', 'Tétouan', 'Al Hoceïma', 'Oujda', 'Kénitra', 'Rabat', 'Casablanca', 'Marrakech', 'Agadir'];
         $count_random = 10;
-        foreach(range(1,11) as $index)
+        foreach(range(1,10) as $index)
         {
             $random_city_index = rand(0, $count_random);
             Shop::create([
-                'name' => $faker->sentence($nbWords = 3, $variableNbWords = true),
-                'image' => 'shop_' . $index . '.png',
+                'name' => $faker->sentence($nbWords = 1, $variableNbWords = true),
+                'image' => $index . '.jpg',
                 'address' => $city_array[$random_city_index] . ", Maroc"
             ]);
-            array_splice($city_array, $random_city_index, 1);
-            $count_random--;
+            /* array_splice($city_array, $random_city_index, 1);
+            $count_random--; */
         }
     }
 }

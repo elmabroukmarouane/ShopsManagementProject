@@ -35,7 +35,7 @@
                 </div>
                 </div>
                 </div>
-                <button type="submit" class="btn btn-primary shadow-primary btn-round btn-block waves-effect waves-light">Sign In</button>
+                <button @click="login()" type="submit" class="btn btn-primary shadow-primary btn-round btn-block waves-effect waves-light">Sign In</button>
                 <div class="text-center pt-3">
                     <p class="text-muted">Do not have an account? <a href="javascript:void(0)" @click="$router.push({ path: '/auth/register' })"> Sign Up here</a></p>
                 </div>

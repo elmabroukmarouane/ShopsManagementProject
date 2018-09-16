@@ -26,8 +26,8 @@ class UsersTableSeeder extends Seeder
             'role' => 'super_admin',
             'address' => $city_array[$random_city_index] . ", Maroc"
         ]);
-        array_splice($city_array, $random_city_index, 1);
-        $count_random--;
+        /* array_splice($city_array, $random_city_index, 1);
+        $count_random--; */
 
         $random_city_index = rand(0, $count_random);
         User::create([
@@ -38,8 +38,8 @@ class UsersTableSeeder extends Seeder
             'role' => 'user',
             'address' => $city_array[$random_city_index] . ", Maroc"
         ]);
-        array_splice($city_array, $random_city_index, 1);
-        $count_random--;
+        /* array_splice($city_array, $random_city_index, 1);
+        $count_random--; */
 
         foreach(range(1,9) as $index)
         {
@@ -52,8 +52,8 @@ class UsersTableSeeder extends Seeder
                 'role' => 'user',
                 'address' => $city_array[$random_city_index] . ", Maroc"
             ]);
-            array_splice($city_array, $random_city_index, 1);
-            $count_random--;
+            /* array_splice($city_array, $random_city_index, 1);
+            $count_random--; */
         }
     }
 }

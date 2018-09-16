@@ -14617,6 +14617,9 @@ var app = new Vue({
         Event.$on('logout-app', function () {
             _this.logoutApp();
         });
+        Event.$on('swal-message', function (title, message, icon, timer) {
+            _this.sweetAlertMessage(title, message, icon, timer);
+        });
     },
 
     methods: {
@@ -14624,6 +14627,14 @@ var app = new Vue({
             $('#logout-modal').modal('hide');
             axios.get('logout').then(function (response) {
                 location.reload();
+            });
+        },
+        sweetAlertMessage: function sweetAlertMessage(title, message, icon, timer) {
+            swal({
+                title: title,
+                text: message,
+                icon: icon,
+                timer: timer
             });
         }
     }
@@ -48084,54 +48095,59 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    {
+      attrs: {
+        id: "sidebar-wrapper",
+        "data-simplebar": "",
+        "data-simplebar-auto-hide": "true"
+      }
+    },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("ul", { staticClass: "sidebar-menu do-nicescrol" }, [
+        _c("li", { staticClass: "sidebar-header" }, [_vm._v("MENU PROJECT")]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "a",
+            {
+              staticClass: "waves-effect",
+              attrs: { href: "javascript:void(0)" },
+              on: {
+                click: function($event) {
+                  _vm.$router.push({ path: "/nearby-shops" })
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "fa fa-shopping-basket" }),
+              _vm._v(" "),
+              _c("span", [_vm._v("Nearby Shops")])
+            ]
+          )
+        ])
+      ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        attrs: {
-          id: "sidebar-wrapper",
-          "data-simplebar": "",
-          "data-simplebar-auto-hide": "true"
-        }
-      },
-      [
-        _c("div", { staticClass: "brand-logo" }, [
-          _c("a", { attrs: { href: "index-2.html" } }, [
-            _c("img", {
-              staticClass: "logo-icon",
-              attrs: { src: "assets/images/logo-icon.png", alt: "logo icon" }
-            }),
-            _vm._v(" "),
-            _c("h5", { staticClass: "logo-text" }, [_vm._v(" ")])
-          ])
-        ]),
+    return _c("div", { staticClass: "brand-logo" }, [
+      _c("a", { attrs: { href: "index-2.html" } }, [
+        _c("img", {
+          staticClass: "logo-icon",
+          attrs: { src: "assets/images/logo-icon.png", alt: "logo icon" }
+        }),
         _vm._v(" "),
-        _c("ul", { staticClass: "sidebar-menu do-nicescrol" }, [
-          _c("li", { staticClass: "sidebar-header" }, [_vm._v("MENU PROJECT")]),
-          _vm._v(" "),
-          _c("li", [
-            _c(
-              "a",
-              {
-                staticClass: "waves-effect",
-                attrs: { href: "javascript:void(0)" }
-              },
-              [
-                _c("i", { staticClass: "fa fa-shopping-basket" }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Nearby Shops")])
-              ]
-            )
-          ])
-        ])
-      ]
-    )
+        _c("h5", { staticClass: "logo-text" }, [_vm._v("Shops Project")])
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -48482,6 +48498,11 @@ if (false) {
 Vue.component('parts-modal-logout', __webpack_require__(60));
 
 /* ------------- End Modal Components ------------- */
+/* ------------- Begin Table Components ------------- */
+
+Vue.component('parts-card', __webpack_require__(100));
+
+/* ------------- End Table Components ------------- */
 
 /***/ }),
 /* 60 */
@@ -51933,7 +51954,12 @@ var render = function() {
         {
           staticClass:
             "btn btn-primary shadow-primary btn-round btn-block waves-effect waves-light",
-          attrs: { type: "submit" }
+          attrs: { type: "submit" },
+          on: {
+            click: function($event) {
+              _vm.login()
+            }
+          }
         },
         [_vm._v("Sign In")]
       ),
@@ -52586,16 +52612,6 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_slider_component__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_slider_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_slider_component__);
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -52612,18 +52628,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    vueSlider: __WEBPACK_IMPORTED_MODULE_0_vue_slider_component___default.a
-  },
-  data: function data() {
-    return {
-      value: 100
-    };
-  },
-  mounted: function mounted() {}
-});
+/* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
 /* 90 */
@@ -52638,41 +52643,11 @@ var render = function() {
     { staticClass: "container-fluid" },
     [
       _c("div", { staticClass: "row pt-2 pb-2" }, [
-        _c("div", { staticClass: "col-sm-3" }, [
+        _c("div", { staticClass: "col-sm-12" }, [
           _c("h4", { staticClass: "page-title" }, [
             _vm._v(_vm._s(_vm.$route.name))
           ])
-        ]),
-        _vm._v(" "),
-        _vm.$route.name == "Nearby Shops"
-          ? _c("div", { staticClass: "col-sm-9" }, [
-              _c(
-                "div",
-                { staticClass: "col-12" },
-                [
-                  _c("vue-slider", {
-                    attrs: {
-                      min: 0,
-                      max: 1000,
-                      formatter: "{value} KM",
-                      interval: 10,
-                      tooltipDir: "left"
-                    },
-                    model: {
-                      value: _vm.value,
-                      callback: function($$v) {
-                        _vm.value = $$v
-                      },
-                      expression: "value"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _vm._m(0)
-            ])
-          : _vm._e()
+        ])
       ]),
       _vm._v(" "),
       _c("hr"),
@@ -52682,16 +52657,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-12" }, [
-      _c("label", [_vm._v("Distance")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -52853,169 +52819,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_slider_component__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_slider_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_slider_component__);
 //
 //
 //
@@ -53043,8 +52848,58 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {}
+  components: {
+    vueSlider: __WEBPACK_IMPORTED_MODULE_0_vue_slider_component___default.a
+  },
+  data: function data() {
+    return {
+      distance_value: 100,
+      shops: []
+    };
+  },
+  mounted: function mounted() {
+    this.getShops();
+  },
+
+  methods: {
+    getShops: function getShops() {
+      var _this = this;
+
+      axios.get("shops").then(function (response) {
+        _this.shops = response.data.shops;
+      });
+    },
+    likeShop: function likeShop(index) {
+      var _this2 = this;
+
+      axios.post("listprefrredshops", {
+        shop_id: this.shops[index].id
+      }).then(function (response) {
+        _this2.shops.splice(index, 1);
+        Event.$emit("swal-message", "Like", response.data.message, "success", 2000);
+      }).catch(function (error) {});
+    },
+    dislikeShop: function dislikeShop(index) {
+      var _this3 = this;
+
+      axios.post("shopsdislikes", {
+        shop_id: this.shops[index].id
+      }).then(function (response) {
+        _this3.shops.splice(index, 1);
+        Event.$emit("swal-message", "Dislike", response.data.message, "error", 2000);
+      }).catch(function (error) {});
+    },
+    getImgUrl: function getImgUrl(shop_image_name) {
+      var shop_image_path = "assets/images/gallery/" + shop_image_name;
+      return shop_image_path;
+    },
+    getIDCard: function getIDCard(index) {
+      var card_id = "card_" + index;
+      return card_id;
+    }
+  }
 });
 
 /***/ }),
@@ -53055,629 +52910,118 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("div", { staticClass: "row" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-10" },
+        [
+          _c("vue-slider", {
+            attrs: {
+              min: 0,
+              max: 1000,
+              formatter: "{value} KM",
+              interval: 10,
+              tooltipDir: "left"
+            },
+            model: {
+              value: _vm.distance_value,
+              callback: function($$v) {
+                _vm.distance_value = $$v
+              },
+              expression: "distance_value"
+            }
+          })
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row" },
+      _vm._l(_vm.shops, function(shop, index) {
+        return _vm.shops.length > 0
+          ? _c(
+              "div",
+              { key: index, staticClass: "col-lg-3" },
+              [
+                _c("parts-card", { attrs: { id: _vm.getIDCard(index + 1) } }, [
+                  _c("img", {
+                    staticClass: "card-img-top",
+                    attrs: {
+                      slot: "shop_image",
+                      src: _vm.getImgUrl(shop.image),
+                      alt: "Card image cap"
+                    },
+                    slot: "shop_image"
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "h5",
+                    {
+                      staticClass: "card-title text-primary",
+                      attrs: { slot: "shop_name" },
+                      slot: "shop_name"
+                    },
+                    [_vm._v(_vm._s(shop.name))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    { attrs: { slot: "shop_footer" }, slot: "shop_footer" },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn btn-danger waves-effect waves-light m-1",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.dislikeShop(index)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fa fa-thumbs-o-down" })]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn btn-success waves-effect waves-light m-1",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.likeShop(index)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fa fa-thumbs-o-up" })]
+                      )
+                    ]
+                  )
+                ])
+              ],
+              1
+            )
+          : _vm._e()
+      })
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-3" }, [
-          _c("div", { staticClass: "card card-primary" }, [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: {
-                src: "assets/images/gallery/1.jpg",
-                alt: "Card image cap"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body text-center" }, [
-              _c("h5", { staticClass: "card-title text-primary" }, [
-                _vm._v("Card Sample Title")
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-danger waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-down" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-success waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-up" })]
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3" }, [
-          _c("div", { staticClass: "card card-primary" }, [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: {
-                src: "assets/images/gallery/1.jpg",
-                alt: "Card image cap"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body text-center" }, [
-              _c("h5", { staticClass: "card-title text-primary" }, [
-                _vm._v("Card Sample Title")
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-danger waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-down" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-success waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-up" })]
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3" }, [
-          _c("div", { staticClass: "card card-primary" }, [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: {
-                src: "assets/images/gallery/1.jpg",
-                alt: "Card image cap"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body text-center" }, [
-              _c("h5", { staticClass: "card-title text-primary" }, [
-                _vm._v("Card Sample Title")
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-danger waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-down" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-success waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-up" })]
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3" }, [
-          _c("div", { staticClass: "card card-primary" }, [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: {
-                src: "assets/images/gallery/1.jpg",
-                alt: "Card image cap"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body text-center" }, [
-              _c("h5", { staticClass: "card-title text-primary" }, [
-                _vm._v("Card Sample Title")
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-danger waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-down" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-success waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-up" })]
-              )
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-3" }, [
-          _c("div", { staticClass: "card card-primary" }, [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: {
-                src: "assets/images/gallery/1.jpg",
-                alt: "Card image cap"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body text-center" }, [
-              _c("h5", { staticClass: "card-title text-primary" }, [
-                _vm._v("Card Sample Title")
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-danger waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-down" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-success waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-up" })]
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3" }, [
-          _c("div", { staticClass: "card card-primary" }, [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: {
-                src: "assets/images/gallery/1.jpg",
-                alt: "Card image cap"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body text-center" }, [
-              _c("h5", { staticClass: "card-title text-primary" }, [
-                _vm._v("Card Sample Title")
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-danger waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-down" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-success waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-up" })]
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3" }, [
-          _c("div", { staticClass: "card card-primary" }, [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: {
-                src: "assets/images/gallery/1.jpg",
-                alt: "Card image cap"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body text-center" }, [
-              _c("h5", { staticClass: "card-title text-primary" }, [
-                _vm._v("Card Sample Title")
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-danger waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-down" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-success waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-up" })]
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3" }, [
-          _c("div", { staticClass: "card card-primary" }, [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: {
-                src: "assets/images/gallery/1.jpg",
-                alt: "Card image cap"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body text-center" }, [
-              _c("h5", { staticClass: "card-title text-primary" }, [
-                _vm._v("Card Sample Title")
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-danger waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-down" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-success waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-up" })]
-              )
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-3" }, [
-          _c("div", { staticClass: "card card-primary" }, [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: {
-                src: "assets/images/gallery/1.jpg",
-                alt: "Card image cap"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body text-center" }, [
-              _c("h5", { staticClass: "card-title text-primary" }, [
-                _vm._v("Card Sample Title")
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-danger waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-down" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-success waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-up" })]
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3" }, [
-          _c("div", { staticClass: "card card-primary" }, [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: {
-                src: "assets/images/gallery/1.jpg",
-                alt: "Card image cap"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body text-center" }, [
-              _c("h5", { staticClass: "card-title text-primary" }, [
-                _vm._v("Card Sample Title")
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-danger waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-down" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-success waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-up" })]
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3" }, [
-          _c("div", { staticClass: "card card-primary" }, [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: {
-                src: "assets/images/gallery/1.jpg",
-                alt: "Card image cap"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body text-center" }, [
-              _c("h5", { staticClass: "card-title text-primary" }, [
-                _vm._v("Card Sample Title")
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-danger waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-down" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-success waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-up" })]
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3" }, [
-          _c("div", { staticClass: "card card-primary" }, [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: {
-                src: "assets/images/gallery/1.jpg",
-                alt: "Card image cap"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body text-center" }, [
-              _c("h5", { staticClass: "card-title text-primary" }, [
-                _vm._v("Card Sample Title")
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-danger waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-down" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-success waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-up" })]
-              )
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-3" }, [
-          _c("div", { staticClass: "card card-primary" }, [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: {
-                src: "assets/images/gallery/1.jpg",
-                alt: "Card image cap"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body text-center" }, [
-              _c("h5", { staticClass: "card-title text-primary" }, [
-                _vm._v("Card Sample Title")
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-danger waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-down" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-success waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-up" })]
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3" }, [
-          _c("div", { staticClass: "card card-primary" }, [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: {
-                src: "assets/images/gallery/1.jpg",
-                alt: "Card image cap"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body text-center" }, [
-              _c("h5", { staticClass: "card-title text-primary" }, [
-                _vm._v("Card Sample Title")
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-danger waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-down" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-success waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-up" })]
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3" }, [
-          _c("div", { staticClass: "card card-primary" }, [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: {
-                src: "assets/images/gallery/1.jpg",
-                alt: "Card image cap"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body text-center" }, [
-              _c("h5", { staticClass: "card-title text-primary" }, [
-                _vm._v("Card Sample Title")
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-danger waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-down" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-success waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-up" })]
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3" }, [
-          _c("div", { staticClass: "card card-primary" }, [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: {
-                src: "assets/images/gallery/1.jpg",
-                alt: "Card image cap"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body text-center" }, [
-              _c("h5", { staticClass: "card-title text-primary" }, [
-                _vm._v("Card Sample Title")
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-danger waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-down" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-success waves-effect waves-light m-1",
-                  attrs: { href: "javascript:void();" }
-                },
-                [_c("i", { staticClass: "fa fa-thumbs-o-up" })]
-              )
-            ])
-          ])
-        ])
-      ])
+    return _c("div", { staticClass: "col-2" }, [
+      _c("label", [_vm._v("Distance")])
     ])
   }
 ]
@@ -53771,6 +53115,114 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-0741f71a", module.exports)
+  }
+}
+
+/***/ }),
+/* 100 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(101)
+/* template */
+var __vue_template__ = __webpack_require__(102)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/parts/cards/Card.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5052a02e", Component.options)
+  } else {
+    hotAPI.reload("data-v-5052a02e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 101 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["id"]
+});
+
+/***/ }),
+/* 102 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "card card-primary", attrs: { id: _vm.id } },
+    [
+      _vm._t("shop_image"),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "card-body text-center" },
+        [
+          _vm._t("shop_name"),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _vm._t("shop_footer")
+        ],
+        2
+      )
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5052a02e", module.exports)
   }
 }
 

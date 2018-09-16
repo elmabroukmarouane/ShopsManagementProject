@@ -4,13 +4,13 @@
       <div class="brand-logo">
         <a href="index-2.html">
         <img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
-        <h5 class="logo-text">&nbsp;</h5>
+        <h5 class="logo-text">Shops Project</h5>
       </a>
     </div>
     <ul class="sidebar-menu do-nicescrol">
         <li class="sidebar-header">MENU PROJECT</li>
         <li>
-          <a href="javascript:void(0)" class="waves-effect">
+          <a href="javascript:void(0)" class="waves-effect" @click="$router.push({ path: '/nearby-shops' })">
             <i class="fa fa-shopping-basket"></i> <span>Nearby Shops</span>
           </a>
         </li>

@@ -27,6 +27,14 @@ Route::post('register', 'Auth\LoginController@register');
 Route::resource('shops', 'ShopsController');
 /* ------------------ Shops ------------------- */
 
+/* ------------------ preferred shops list ------------------- */
+Route::resource('listprefrredshops', 'ListprefrredshopsController');
+/* ------------------ preferred shops list ------------------- */
+
+/* ------------------ dislike shops list ------------------- */
+Route::resource('shopsdislikes', 'ShopsdislikesController');
+/* ------------------ dislike shops list ------------------- */
+
 /* ------------------ Ckech Auth ------------------- */
 // Check Loging
 Route::get('is-logged', function(){

@@ -22,6 +22,9 @@ const app = new Vue({
         Event.$on('logout-app', () => {
             this.logoutApp();
         });
+        Event.$on('swal-message', (title, message, icon, timer) => {
+            this.sweetAlertMessage(title, message, icon, timer);
+        });
     },
     methods: {
         logoutApp() {
@@ -30,6 +33,14 @@ const app = new Vue({
                 .then((response) => {
                     location.reload();
                 });
+        },
+        sweetAlertMessage(title, message, icon, timer) {
+            swal({
+                title: title,
+                text: message,
+                icon: icon,
+                timer: timer
+            });
         }
     }
 });
