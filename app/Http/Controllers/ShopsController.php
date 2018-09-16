@@ -166,17 +166,12 @@ class ShopsController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Shop $shop
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Shop $shop)
+    public function update_shop(Request $request)
     {
+        $shop = Shop::find($request->id);
         $shop->name = $request->name;
         $shop->address = $request->address;
+        $image_upload = false;
 
         $image = $request->file('selectedImage');
         if(File::isFile($image)){
@@ -188,21 +183,32 @@ class ShopsController extends Controller
             $nom_image = $request->name . "_" . str_random(8) . "." . $image->getClientOriginalExtension();
             $image->move($path, $nom_image);
             $shop->image = $nom_image;
+            $image_upload = true;
         }
         
         $result_shop = $shop->saveOrFail();
         if($result_shop){
             return response()->json([
-                'msg' => 'Shop updated successfully !'
+                'msg' => 'Shop updated successfully !',
+                'image_upload' => $image_upload
             ], 200);
         }else{
             return response()->json([
                 'msg' => 'Something went wrong. Failed action !'
             ], 500);
         }
-        return response()->json([
-            'message' => 'User updated successfully!'
-        ], 200);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Shop $shop
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Shop $shop)
+    {
+        
     }
 
     /**

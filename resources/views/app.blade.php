@@ -9,7 +9,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="description" content=""/>
         <meta name="author" content=""/>
-        <title>Rocker - Bootstrap4  Admin Dashboard Template</title>
+        <title>Shops Management Project</title>
         <!--favicon-->
         <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
         <!--Data Tables -->

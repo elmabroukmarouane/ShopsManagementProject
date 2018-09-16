@@ -26,6 +26,7 @@ Route::post('register', 'Auth\LoginController@register');
 /* ------------------ Shops ------------------- */
 Route::resource('shops', 'ShopsController');
 Route::get('shops-list', 'ShopsController@shops_list');
+Route::post('update-shop', 'ShopsController@update_shop');
 /* ------------------ Shops ------------------- */
 
 /* ------------------ preferred shops list ------------------- */

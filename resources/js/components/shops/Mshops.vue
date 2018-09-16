@@ -177,13 +177,17 @@ export default {
       $("#update-modal").modal("show");
     },
     updateShop() {
+      const formData = new FormData();
+      formData.append("id", this.shop_update.id);
+      formData.append("name", this.shop_update.name);
+      formData.append("address", this.shop_update.address);
+      formData.append("selectedImage", this.shop_update.selectedImage);
       axios
-        .patch("shops/" + this.shop_update.id, {
-          name: this.shop_update.name,
-          address: this.shop_update.address,
-          selectedImage: this.shop_update.selectedImage
-        })
+        .post("update-shop", formData)
         .then(response => {
+          if (response.data.image_upload == true) {
+            this.refreshTable();
+          }
           this.reset();
           Event.$emit("hide-modal-normal", "update-modal");
           Event.$emit(
