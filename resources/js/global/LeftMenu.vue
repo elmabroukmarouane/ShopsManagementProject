@@ -19,12 +19,13 @@
             <i class="fa fa-heart"></i> <span>My Preferred Shops</span>
           </a>
         </li>
-        <li :class="[$route.name == 'Shops Management' ? 'active':'']" v-if="role == 'super_admin'">
+        <li :class="[($route.name == 'Shops Management' || $route.name == 'Users Management') ? 'active':'']" v-if="role == 'super_admin'">
           <a href="javascrip:void(0)" class="waves-effect">
             <i class="fa fa-gears"></i> <span>Configurations</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="sidebar-submenu">
-            <li :class="[$route.name == 'Shops Management' ? 'active':'']"><a href="javascript:void(0)" @click="$router.push({ path: '/shops-management' })"><i class="fa fa-shopping-cart"></i> Shops Management</a></li>
+            <li :class="[($route.name == 'Shops Management') ? 'active':'']"><a href="javascript:void(0)" @click="$router.push({ path: '/shops-management' })"><i class="fa fa-shopping-cart"></i> Shops Management</a></li>
+            <li :class="[$route.name == 'Users Management' ? 'active':'']"><a href="javascript:void(0)" @click="$router.push({ path: '/users-management' })"><i class="fa fa-users"></i> Users Management</a></li>
           </ul>
         </li>
       </ul>

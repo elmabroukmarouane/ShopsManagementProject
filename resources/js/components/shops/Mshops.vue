@@ -4,7 +4,16 @@
           <div class="card">
             <div class="card-header"><i class="fa fa-table"></i> Shops List</div>
             <div class="card-body">
-                <button @click="initAddShop()" type="button" class="btn btn-primary waves-effect waves-light m-1"><i class="fa fa-plus"></i> ADD SHOP</button>
+                <div class="btn-group m-1" role="group">
+                  <button type="button" class="btn btn-primary waves-effect waves-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdown_action_shops">
+                    Actions
+                  </button>
+                  <div class="dropdown-menu">
+                    <button @click="initAddShop()" type="button" class="dropdown-item" style="cursor:pointer;"><i class="fa fa-plus"></i> ADD SHOP</button>
+                    <div class="dropdown-divider"></div>
+                    <button @click="refreshTable()" type="button" class="dropdown-item" style="cursor:pointer;"><i class="fa fa-refresh"></i> REFRESH TABLE</button>
+                  </div>
+                </div>
                 <br>
                 <br>
                 <div class="table-responsive">
@@ -16,9 +25,9 @@
                                     <img :src="getImgUrl(shop.image)" :alt="shop.name" class="lightbox-thumb img-thumbnail">
                                 </a>
                             </td>
-                            <td>{{ shop.address }}</td>
+                            <td>{{ shop.address }} <strong style="color: #008cff;">({{ shop.lat }}, {{ shop.lng }})</strong></td>
                             <td>
-                                <button @click="initUpdateUser(index)" type="button" class="btn btn-warning waves-effect waves-light m-1"><i class="fa fa-edit"></i></button>
+                                <button @click="initUpdateShop(index)" type="button" class="btn btn-warning waves-effect waves-light m-1"><i class="fa fa-edit"></i></button>
                                 <button @click="removeShop(index)" type="button" class="btn btn-danger waves-effect waves-light m-1"><i class="fa fa-trash"></i></button>
                             </td>
                         </tr>
@@ -48,12 +57,12 @@
                             <input @change="onSelectedImage" type="file" class="form-control" id="add_shop_image" name="add_shop_image" accept="image/*" required>
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <!-- <div class="form-group row">
                         <label for="add_shop_address" class="col-sm-2 col-form-label">Address</label>
                         <div class="col-sm-10">
                             <textarea v-on:keyup.enter="addShop()" v-model="shop.address" class="form-control" rows="4" id="add_shop_address" name="add_shop_address" required></textarea>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form-footer">
                         <button type="button" class="btn btn-success" data-dismiss="modal">CANCEL</button>
                         <button @click="addShop()" type="submit" class="btn btn-danger">ADD</button>
@@ -82,12 +91,12 @@
                             <input @change="onSelectedImageUpdate" type="file" class="form-control" id="update_shop_image" name="update_shop_image" accept="image/*">
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <!-- <div class="form-group row">
                         <label for="update_shop_address" class="col-sm-2 col-form-label">Address</label>
                         <div class="col-sm-10">
                             <textarea v-on:keyup.enter="updateShop()" v-model="shop_update.address" class="form-control" rows="4" id="update_shop_address" name="update_shop_address" required></textarea>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form-footer">
                         <button type="button" class="btn btn-success" data-dismiss="modal">CANCEL</button>
                         <button @click="updateShop()" type="submit" class="btn btn-danger">UPDATE</button>
@@ -104,13 +113,13 @@ export default {
     return {
       shop: {
         name: "",
-        selectedImage: null,
-        address: ""
+        selectedImage: null /* ,
+        address: "" */
       },
       shop_update: {
         name: "",
-        selectedImage: null,
-        address: ""
+        selectedImage: null /* ,
+        address: "" */
       },
       list_datatable_fields: ["Name", "Image", "Address", "Actions"],
       shops: []
@@ -122,11 +131,12 @@ export default {
   },
   methods: {
     init_components_forms() {
+      $("#dropdown_action_shops").dropdown();
       $("#add_shop_form").validate();
       $("#update_shop_form").validate();
     },
     getShops() {
-      axios.get("shops-list").then(response => {
+      axios.get("shops").then(response => {
         this.shops = response.data.shops;
         Vue.nextTick(function() {
           Event.$emit("init-datatable", "shops_list");
@@ -139,12 +149,12 @@ export default {
     addShop() {
       if (
         this.shop.name != "" &&
-        this.shop.selectedImage != "" &&
-        this.shop.address != ""
+        this.shop.selectedImage != "" /* &&
+        this.shop.address != "" */
       ) {
         const formData = new FormData();
         formData.append("name", this.shop.name);
-        formData.append("address", this.shop.address);
+        //formData.append("address", this.shop.address);
         formData.append("selectedImage", this.shop.selectedImage);
         axios
           .post("shops", formData)
@@ -172,42 +182,48 @@ export default {
           });
       }
     },
-    initUpdateUser(index) {
+    initUpdateShop(index) {
       this.shop_update = this.shops[index];
       $("#update-modal").modal("show");
     },
     updateShop() {
-      const formData = new FormData();
-      formData.append("id", this.shop_update.id);
-      formData.append("name", this.shop_update.name);
-      formData.append("address", this.shop_update.address);
-      formData.append("selectedImage", this.shop_update.selectedImage);
-      axios
-        .post("update-shop", formData)
-        .then(response => {
-          if (response.data.image_upload == true) {
-            this.refreshTable();
-          }
-          this.reset();
-          Event.$emit("hide-modal-normal", "update-modal");
-          Event.$emit(
-            "swal-message",
-            "Update Shop",
-            response.data.msg,
-            "success",
-            2000
-          );
-        })
-        .catch(error => {
-          Event.$emit("hide-modal-normal", "update-modal");
-          Event.$emit(
-            "swal-message",
-            "Update Shop",
-            "Error Axios ! " + error,
-            "error",
-            2000
-          );
-        });
+      if (
+        this.shop_update.name != "" &&
+        this.shop_update.selectedImage !=
+          "" /* &&
+        this.shop.address != "" */
+      ) {
+        const formData = new FormData();
+        formData.append("id", this.shop_update.id);
+        formData.append("name", this.shop_update.name);
+        //formData.append("address", this.shop_update.address);
+        formData.append("selectedImage", this.shop_update.selectedImage);
+        axios
+          .post("update-shop", formData)
+          .then(response => {
+            if (response.data.image_upload == true) {
+              this.refreshTable();
+            }
+            Event.$emit("hide-modal-normal", "update-modal");
+            Event.$emit(
+              "swal-message",
+              "Update Shop",
+              response.data.msg,
+              "success",
+              2000
+            );
+          })
+          .catch(error => {
+            Event.$emit("hide-modal-normal", "update-modal");
+            Event.$emit(
+              "swal-message",
+              "Update Shop",
+              "Error Axios ! " + error,
+              "error",
+              2000
+            );
+          });
+      }
     },
     removeShop(index) {
       swal({
@@ -252,7 +268,7 @@ export default {
     reset() {
       this.shop.name = "";
       this.shop.selectedImage = "";
-      this.shop.address = "";
+      //this.shop.address = "";
     },
     onSelectedImage(event) {
       this.shop.selectedImage = event.target.files[0];

@@ -1,41 +1,47 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Auth;
 use App\User;
 
-class LoginController extends Controller
+class UsersController extends Controller
 {
-    public function __construct() {
-        $this->middleware('guest', ['except' => ['logout']]);
-    }
-
-    public function login(Request $request)
+    public function __construct()
     {
-        $email = $request->email;
-        $password = $request->password;
-
-        if (Auth::attempt(['email' => $email, 'password' => $password]))
-        {
-            return response()->json([
-                'msg' => 'Welcome  ' . Auth::user()->name . ' !'
-            ], 200);
-        }
+        $this->middleware('auth');
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $users = User::orderBy('id', 'DESC')->get();
         return response()->json([
-                'msg' => 'Wrong email or password !'
-            ], 500);
+            'users'    => $users,
+        ], 200);
     }
 
-    public function logout()
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        Auth::logout();
+        //
     }
 
-    public function register(Request $request)
-    {
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {   
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
@@ -101,17 +107,88 @@ class LoginController extends Controller
         $user->address = $city_array[$random_city_index]["city"] . ", Maroc";
         $user->lat = $city_array[$random_city_index]["lat"];
         $user->lng = $city_array[$random_city_index]["lng"];
-        //$user->address = $request->address;
-        $user->role = "user";
+        $user->role = $request->role;
+
         $result_user = $user->saveOrFail();
         if($result_user){
             return response()->json([
+                'user' => $user,
                 'msg' => 'User created successfully !'
             ], 200);
         }else{
             return response()->json([
                 'msg' => 'Something went wrong. Failed action !'
             ], 500);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, User $user)
+    {
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if($request->password != '')
+        {
+            $user->password = bcrypt($request->password);
+        }
+        $user->role = $request->role;
+        $result_user = $user->saveOrFail();
+        if($result_user){
+            return response()->json([
+                'msg' => 'User updated successfully !'
+            ], 200);
+        }else{
+            return response()->json([
+                'msg' => 'Something went wrong. Failed action !'
+            ], 500);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $result = User::where('id','=', $id)->delete();
+        if($result){
+            return response()->json([
+                'message' => 'User removed successfully !'
+            ], 200);
+        }else{
+            return response()->json([
+                'message' => 'Action Failed  !'
+            ], 200);
         }
     }
 }

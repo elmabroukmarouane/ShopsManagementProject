@@ -56,6 +56,9 @@
         <script src="assets/plugins/bootstrap-datatable/js/dataTables.bootstrap4.min.js"></script>
         <!--Lightbox-->
         <script src="assets/plugins/fancybox/js/jquery.fancybox.min.js"></script>
+        <!-- GeoLocalisation Google API -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2V6ikwrwWhaa9j3fRxNDi-Yy-y8PaNSo&libraries=places"></script>
+
         <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>

@@ -45,10 +45,10 @@
 				  </div>
 			   </div>
 			  </div>
-        <div class="form-group row">
+        <!-- <div class="form-group row">
 				  <label for="address" class="sr-only">Address</label>
 				  <textarea v-on:keyup.enter="register()" v-model="address" name="address" class="form-control form-control-rounded" id="address" placeholder="Address"></textarea>
-				</div>
+				</div> -->
 			 <button @click="register()" type="submit" class="btn btn-primary shadow-primary btn-round btn-block waves-effect waves-light">Sign Up</button>
 			  <div class="text-center pt-3">
 				<p class="text-muted">Already have an account? <a href="javascript:void(0)" @click="$router.push({ path: '/auth/login' })"> Sign In here</a></p>
@@ -66,8 +66,8 @@ export default {
       name: "",
       email: "",
       password: "",
-      confirm_password: "",
-      address: ""
+      confirm_password: ""
+      //address: ""
     };
   },
   mounted() {
@@ -90,8 +90,8 @@ export default {
             required: true,
             minlength: 6,
             equalTo: "#password"
-          },
-          address: "required"
+          }
+          //address: "required"
         },
         messages: {
           name: "Please enter your First & Lastname",
@@ -107,8 +107,8 @@ export default {
             required: "Please provide a password",
             minlength: "Your password must be at least 6 characters long",
             equalTo: "Please enter the same password as above"
-          },
-          address: "Please enter your address"
+          }
+          //address: "Please enter your address"
         }
       });
     },
@@ -116,15 +116,15 @@ export default {
       if (
         this.name != "" &&
         this.email != "" &&
-        this.password != "" &&
-        this.address != ""
+        this.password != "" /* &&
+        this.address != "" */
       ) {
         axios
           .post("register", {
             name: this.name,
             email: this.email,
-            password: this.password,
-            address: this.address
+            password: this.password /* ,
+            address: this.address */
           })
           .then(response => {
             this.color_alert =

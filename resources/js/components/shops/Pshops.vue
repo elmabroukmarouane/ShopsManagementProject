@@ -3,7 +3,10 @@
             <div class="col-lg-3" v-for="(shop, index) in shops" v-if="shops.length > 0" :key="index">
               <parts-card :id="getIDCard(index+1)">
                 <img slot="shop_image" :src="getImgUrl(shop.image)" class="card-img-top" alt="Card image cap">
-                <h5 slot="shop_name" class="card-title text-primary">{{ shop.name }}</h5>
+                <span slot="shop_name">
+                  <h5 class="card-title text-primary">{{ shop.name }}</h5>
+                  <strong>ADDRESS :</strong> <span style="color: #008cff;">{{ shop.address }}</span><br>
+                </span>
                 <span slot="shop_footer">
                   <button @click="removeShop(index)" type="button" class="btn btn-danger waves-effect waves-light m-1"><i class="fa fa-trash"></i> Remove</button>
                 </span>

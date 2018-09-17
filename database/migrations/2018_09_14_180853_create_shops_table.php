@@ -19,6 +19,8 @@ class CreateShopsTable extends Migration
             $table->string('name');
             $table->string('image');
             $table->text('address');
+            $table->double('lat');
+            $table->double('lng');
             $table->timestamps();
         });
     }

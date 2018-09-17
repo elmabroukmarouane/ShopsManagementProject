@@ -24,7 +24,16 @@ class ShopsController extends Controller
      */
     public function index()
     {
-        $shopsdislikes = Shopsdislike::where('user_id', '=', Auth::id())
+        $shops = Shop::orderBy('id', 'DESC')->get();
+        return response()->json([
+            'shops'    => $shops,
+        ], 200);
+    }
+
+    public function getShopsByDistance($distance)
+    {
+        $user = Auth::user();
+        $shopsdislikes = Shopsdislike::where('user_id', '=', $user->id)
                                     ->get();
         if(count($shopsdislikes) > 0)
         {
@@ -38,64 +47,60 @@ class ShopsController extends Controller
                 }
             }
         }
-        $listprefrredshops = Listprefrredshop::where('user_id', '=', Auth::id())
-                                    ->select('listprefrredshops.id')
+        $listprefrredshops = Listprefrredshop::where('user_id', '=', $user->id)
+                                    ->select('shop_id')
                                     ->get();
-        $shopsdislikes = Shopsdislike::where('user_id', '=', Auth::id())
-                                    ->select('shopsdislikes.id')
+        $shopsdislikes = Shopsdislike::where('user_id', '=', $user->id)
+                                    ->select('shop_id')
                                     ->get();
         $listprefrredshops_ids = array();
         $shopsdislikes_ids = array();
         foreach($listprefrredshops as $listprefrredshop)
         {
-            array_push($listprefrredshops_ids, $listprefrredshop->id);
+            array_push($listprefrredshops_ids, $listprefrredshop->shop_id);
         }
         foreach($shopsdislikes as $shopsdislike)
         {
-            array_push($shopsdislikes_ids, $shopsdislike->id);
+            array_push($shopsdislikes_ids, $shopsdislike->shop_id);
         }
         $count_listprefrredshops = count($listprefrredshops_ids);
         $count_shopsdislikes = count($shopsdislikes_ids);
         if($count_listprefrredshops <= 0 && $count_shopsdislikes <= 0)
         {
-            $shops = Shop::select('shops.id', 'shops.name', 'shops.image', 'shops.address')
-                        ->orderBy('shops.name', 'asc')
+            $shops = Shop::select('id', 'name', 'image', 'lat', 'lng', 'address', DB::raw('( 6367 * acos( cos( radians(' . $user->lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $user->lng . ') ) + sin( radians(' . $user->lat . ') ) * sin( radians( lat ) ) ) ) AS distance'))
+                        ->having('distance', '<', $distance)
+                        ->orderBy('name', 'asc')
                         ->distinct()
                         ->get();
         }
         else if($count_listprefrredshops > 0 && $count_shopsdislikes <= 0)
         {
-            $shops = Shop::select('shops.id', 'shops.name', 'shops.image', 'shops.address')
+            $shops = Shop::select('id', 'name', 'image', 'lat', 'lng', 'address', DB::raw('( 6367 * acos( cos( radians(' . $user->lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $user->lng . ') ) + sin( radians(' . $user->lat . ') ) * sin( radians( lat ) ) ) ) AS distance'))
                     ->whereNotIn('id', $listprefrredshops_ids)
-                    ->orderBy('shops.name', 'asc')
+                    ->having('distance', '<', $distance)
+                    ->orderBy('name', 'asc')
                     ->distinct()
                     ->get();
         }
         else if($count_listprefrredshops <= 0 && $count_shopsdislikes > 0)
         {
-            $shops = Shop::select('shops.id', 'shops.name', 'shops.image', 'shops.address')
+            $shops = Shop::select('id', 'name', 'image', 'lat', 'lng', 'address', DB::raw('( 6367 * acos( cos( radians(' . $user->lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $user->lng . ') ) + sin( radians(' . $user->lat . ') ) * sin( radians( lat ) ) ) ) AS distance'))
                     ->whereNotIn('id', $shopsdislikes_ids)
-                    ->orderBy('shops.name', 'asc')
+                    ->having('distance', '<', $distance)
+                    ->orderBy('name', 'asc')
                     ->distinct()
                     ->get();
         }
         else if($count_listprefrredshops > 0 && $count_shopsdislikes > 0)
         {
-            $shops = Shop::select('shops.id', 'shops.name', 'shops.image', 'shops.address')
+            $shops = Shop::select('id', 'name', 'image', 'lat', 'lng', 'address', DB::raw('( 6367 * acos( cos( radians(' . $user->lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $user->lng . ') ) + sin( radians(' . $user->lat . ') ) * sin( radians( lat ) ) ) ) AS distance'))
                     ->whereNotIn('id', $listprefrredshops_ids)
                     ->whereNotIn('id', $shopsdislikes_ids)
-                    ->orderBy('shops.name', 'asc')
+                    ->having('distance', '<', $distance)
+                    ->orderBy('name', 'asc')
                     ->distinct()
                     ->get();
         }
-        return response()->json([
-            'shops'    => $shops,
-        ], 200);
-    }
-
-    public function shops_list()
-    {
-        $shops = Shop::orderBy('id', 'DESC')->get();
         return response()->json([
             'shops'    => $shops,
         ], 200);
@@ -129,7 +134,68 @@ class ShopsController extends Controller
         $shop = new Shop();
         $shop->name = $request->name;
         $shop->image = $nom_image;
-        $shop->address = $request->address;
+        $city_array = [
+            array(
+                'city' => 'Tanger',
+                'lat' => '35.7594651',
+                'lng' => '-5.833954299999959'
+                )
+            , array(
+                'city' => 'Assilah',
+                'lat' => '35.4646127',
+                'lng' => '-6.030865400000039'
+                ), 
+            array(
+                'city' => 'Larache',
+                'lat' => '35.1744271',
+                'lng' => '-6.147396399999934'
+                ), 
+            array(
+                'city' => 'Tétouan',
+                'lat' => '35.5888995',
+                'lng' => '-5.362551599999961'
+                ), 
+            array(
+                'city' => 'Al Hoceïma',
+                'lat' => '35.2445589',
+                'lng' => '-3.9317468000000417'
+                ), 
+            array(
+                'city' => 'Oujda',
+                'lat' => '34.681962',
+                'lng' => '-1.9001550000000407'
+                ), 
+            array(
+                'city' => 'Kénitra',
+                'lat' => '34.2540503',
+                'lng' => '-6.589016600000036'
+                ), 
+            array(
+                'city' => 'Rabat',
+                'lat' => '33.9715904',
+                'lng' => '-6.849812899999961'
+                ), 
+            array(
+                'city' => 'Casablanca',
+                'lat' => '33.5731104',
+                'lng' => '-7.589843400000063'
+                ), 
+            array(
+                'city' => 'Marrakech',
+                'lat' => '31.6294723',
+                'lng' => '-7.981084499999952'
+                ), 
+            array(
+                'city' => 'Agadir',
+                'lat' => '30.4277547',
+                'lng' => '-9.598107199999959'
+                )
+        ];
+        $random_city_index = rand(0, 10);
+        $shop->address = $city_array[$random_city_index]["city"] . ", Maroc";
+        $shop->lat = $city_array[$random_city_index]["lat"];
+        $shop->lng = $city_array[$random_city_index]["lng"];
+        //$shop->address = $request->address;
 
         $result_shop = $shop->saveOrFail();
         if($result_shop){
@@ -170,7 +236,7 @@ class ShopsController extends Controller
     {
         $shop = Shop::find($request->id);
         $shop->name = $request->name;
-        $shop->address = $request->address;
+        //$shop->address = $request->address;
         $image_upload = false;
 
         $image = $request->file('selectedImage');
@@ -208,7 +274,7 @@ class ShopsController extends Controller
      */
     public function update(Request $request, Shop $shop)
     {
-        
+        //
     }
 
     /**

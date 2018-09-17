@@ -36,7 +36,8 @@ const routes = [{
             path: '/preferred-shops',
             component: require('./components/shops/Pshops.vue'),
         }],
-    }, {
+    },
+    {
         path: '/',
         component: require('./components/layouts/LayoutApp.vue'),
         beforeEnter: requireAuth,
@@ -44,6 +45,16 @@ const routes = [{
             name: 'Shops Management',
             path: '/shops-management',
             component: require('./components/shops/Mshops.vue'),
+        }],
+    },
+    {
+        path: '/',
+        component: require('./components/layouts/LayoutApp.vue'),
+        beforeEnter: requireAuth,
+        children: [{
+            name: 'Users Management',
+            path: '/users-management',
+            component: require('./components/users/Musers.vue'),
         }],
     },
     {

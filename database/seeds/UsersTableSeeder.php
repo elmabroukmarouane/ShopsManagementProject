@@ -14,7 +14,63 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        $city_array = ['Tanger', 'Assilah', 'Larache', 'Tétouan', 'Al Hoceïma', 'Oujda', 'Kénitra', 'Rabat', 'Casablanca', 'Marrakech', 'Agadir'];
+        $city_array = [
+            array(
+                'city' => 'Tanger',
+                'lat' => '35.7594651',
+                'lng' => '-5.833954299999959'
+                )
+            , array(
+                'city' => 'Assilah',
+                'lat' => '35.4646127',
+                'lng' => '-6.030865400000039'
+                ), 
+            array(
+                'city' => 'Larache',
+                'lat' => '35.1744271',
+                'lng' => '-6.147396399999934'
+                ), 
+            array(
+                'city' => 'Tétouan',
+                'lat' => '35.5888995',
+                'lng' => '-5.362551599999961'
+                ), 
+            array(
+                'city' => 'Al Hoceïma',
+                'lat' => '35.2445589',
+                'lng' => '-3.9317468000000417'
+                ), 
+            array(
+                'city' => 'Oujda',
+                'lat' => '34.681962',
+                'lng' => '-1.9001550000000407'
+                ), 
+            array(
+                'city' => 'Kénitra',
+                'lat' => '34.2540503',
+                'lng' => '-6.589016600000036'
+                ), 
+            array(
+                'city' => 'Rabat',
+                'lat' => '33.9715904',
+                'lng' => '-6.849812899999961'
+                ), 
+            array(
+                'city' => 'Casablanca',
+                'lat' => '33.5731104',
+                'lng' => '-7.589843400000063'
+                ), 
+            array(
+                'city' => 'Marrakech',
+                'lat' => '31.6294723',
+                'lng' => '-7.981084499999952'
+                ), 
+            array(
+                'city' => 'Agadir',
+                'lat' => '30.4277547',
+                'lng' => '-9.598107199999959'
+                )
+        ];
         $count_random = 10;
 
         $random_city_index = rand(0, $count_random);
@@ -24,7 +80,9 @@ class UsersTableSeeder extends Seeder
             'email_verified_at' => $faker->dateTime($max = 'now', $timezone = null),
             'password' => bcrypt('123456'),
             'role' => 'super_admin',
-            'address' => $city_array[$random_city_index] . ", Maroc"
+            'address' => $city_array[$random_city_index]["city"] . ", Maroc",
+            'lat' => $city_array[$random_city_index]["lat"],
+            'lng' => $city_array[$random_city_index]["lng"]
         ]);
         /* array_splice($city_array, $random_city_index, 1);
         $count_random--; */
@@ -36,7 +94,9 @@ class UsersTableSeeder extends Seeder
             'email_verified_at' => $faker->dateTime($max = 'now', $timezone = null),
             'password' => bcrypt('123456'),
             'role' => 'user',
-            'address' => $city_array[$random_city_index] . ", Maroc"
+            'address' => $city_array[$random_city_index]["city"] . ", Maroc",
+            'lat' => $city_array[$random_city_index]["lat"],
+            'lng' => $city_array[$random_city_index]["lng"]
         ]);
         /* array_splice($city_array, $random_city_index, 1);
         $count_random--; */
@@ -50,7 +110,9 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => $faker->dateTime($max = 'now', $timezone = null),
                 'password' => bcrypt('123456'),
                 'role' => 'user',
-                'address' => $city_array[$random_city_index] . ", Maroc"
+                'address' => $city_array[$random_city_index]["city"] . ", Maroc",
+                'lat' => $city_array[$random_city_index]["lat"],
+                'lng' => $city_array[$random_city_index]["lng"]
             ]);
             /* array_splice($city_array, $random_city_index, 1);
             $count_random--; */

@@ -513,6 +513,53 @@ module.exports = g;
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(87)
+/* template */
+var __vue_template__ = __webpack_require__(88)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/layouts/LayoutApp.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-18b4d994", Component.options)
+  } else {
+    hotAPI.reload("data-v-18b4d994", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
@@ -612,53 +659,6 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = defaults;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(87)
-/* template */
-var __vue_template__ = __webpack_require__(88)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/layouts/LayoutApp.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-18b4d994", Component.options)
-  } else {
-    hotAPI.reload("data-v-18b4d994", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
 
 /***/ }),
 /* 5 */
@@ -46559,7 +46559,7 @@ module.exports = __webpack_require__(23);
 var utils = __webpack_require__(1);
 var bind = __webpack_require__(6);
 var Axios = __webpack_require__(25);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(4);
 
 /**
  * Create an instance of Axios
@@ -46642,7 +46642,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(4);
 var utils = __webpack_require__(1);
 var InterceptorManager = __webpack_require__(34);
 var dispatchRequest = __webpack_require__(35);
@@ -47181,7 +47181,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(1);
 var transformData = __webpack_require__(36);
 var isCancel = __webpack_require__(10);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(4);
 var isAbsoluteURL = __webpack_require__(37);
 var combineURLs = __webpack_require__(38);
 
@@ -48166,6 +48166,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -48263,7 +48264,12 @@ var render = function() {
           ? _c(
               "li",
               {
-                class: [_vm.$route.name == "Shops Management" ? "active" : ""]
+                class: [
+                  _vm.$route.name == "Shops Management" ||
+                  _vm.$route.name == "Users Management"
+                    ? "active"
+                    : ""
+                ]
               },
               [
                 _vm._m(1),
@@ -48290,6 +48296,32 @@ var render = function() {
                         [
                           _c("i", { staticClass: "fa fa-shopping-cart" }),
                           _vm._v(" Shops Management")
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      class: [
+                        _vm.$route.name == "Users Management" ? "active" : ""
+                      ]
+                    },
+                    [
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: "javascript:void(0)" },
+                          on: {
+                            click: function($event) {
+                              _vm.$router.push({ path: "/users-management" })
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "fa fa-users" }),
+                          _vm._v(" Users Management")
                         ]
                       )
                     ]
@@ -49518,7 +49550,7 @@ function requireAuth(to, from, next) {
 
 var routes = [{
     path: '/',
-    component: __webpack_require__(4),
+    component: __webpack_require__(3),
     beforeEnter: requireAuth,
     children: [{
         name: 'Nearby Shops',
@@ -49527,7 +49559,7 @@ var routes = [{
     }]
 }, {
     path: '/',
-    component: __webpack_require__(4),
+    component: __webpack_require__(3),
     beforeEnter: requireAuth,
     children: [{
         name: 'My Preferred Shops',
@@ -49536,12 +49568,21 @@ var routes = [{
     }]
 }, {
     path: '/',
-    component: __webpack_require__(4),
+    component: __webpack_require__(3),
     beforeEnter: requireAuth,
     children: [{
         name: 'Shops Management',
         path: '/shops-management',
         component: __webpack_require__(95)
+    }]
+}, {
+    path: '/',
+    component: __webpack_require__(3),
+    beforeEnter: requireAuth,
+    children: [{
+        name: 'Users Management',
+        path: '/users-management',
+        component: __webpack_require__(113)
     }]
 }, {
     path: '/auth',
@@ -52346,43 +52387,84 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       distance_value: 50,
+      address_logged: "",
       shops: []
     };
   },
   mounted: function mounted() {
+    //this.calculateDistance("Tanger, Maroc", "Rabat, Maroc");
     this.getShops();
+    this.getAddressLogged();
   },
 
   methods: {
-    getShops: function getShops() {
+    getAddressLogged: function getAddressLogged() {
       var _this = this;
 
-      axios.get("shops").then(function (response) {
-        _this.shops = response.data.shops;
+      axios.get("is-logged").then(function (response) {
+        _this.address_logged = response.data.address;
+      });
+    },
+    getShops: function getShops() {
+      var _this2 = this;
+
+      axios.get("get-shops-by-distance/" + this.distance_value).then(function (response) {
+        _this2.shops = response.data.shops;
+      });
+    },
+    calculateDistance: function calculateDistance(origin, destination) {
+      var myLatLng = { lat: 35.76727, lng: -5.79975 };
+      var mapOptions = {
+        center: myLatLng,
+        zoom: 7,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      var map = new google.maps.Map(document.getElementById("googleMap"), mapOptions);
+      var directionsService = new google.maps.DirectionsService();
+      var request = {
+        origin: origin,
+        destination: destination,
+        travelMode: google.maps.TravelMode.DRIVING,
+        unitSystem: google.maps.UnitSystem.metric
+      };
+      directionsService.route(request, function (result, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+          var array_result_distance = [];
+          array_result_distance.push(result.routes[0].legs[0].distance.text);
+          array_result_distance.push(result.routes[0].legs[0].duration.text);
+          console.log("result.routes[0].legs[0].distance.text => ", result.routes[0].legs[0].distance.text, "result.routes[0].legs[0].duration.text => ", result.routes[0].legs[0].duration.text);
+        } else {
+          Event.$emit("swal-message", "Google Maps DistanceMatrix", "Could not retrieve driving distance !", "error", 2000);
+        }
       });
     },
     likeShop: function likeShop(index) {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.post("listprefrredshops", {
         shop_id: this.shops[index].id
       }).then(function (response) {
-        _this2.shops.splice(index, 1);
+        _this3.shops.splice(index, 1);
         Event.$emit("swal-message", "Like", response.data.message, "success", 2000);
       }).catch(function (error) {});
     },
     dislikeShop: function dislikeShop(index) {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.post("shopsdislikes", {
         shop_id: this.shops[index].id
       }).then(function (response) {
-        _this3.shops.splice(index, 1);
+        _this4.shops.splice(index, 1);
         Event.$emit("swal-message", "Dislike", response.data.message, "error", 2000);
       }).catch(function (error) {});
     },
@@ -52393,9 +52475,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     getIDCard: function getIDCard(index) {
       var card_id = "card_" + index;
       return card_id;
-    },
-    getShopsByDistance: function getShopsByDistance() {
-      console.log("Distance Value => ", this.distance_value);
     }
   }
 });
@@ -52410,16 +52489,19 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-2" }, [
+      _c("div", { staticClass: "col-4" }, [
         _c("label", { attrs: { for: "distance_slider" } }, [
-          _vm._v("Distance : "),
+          _vm._v("Distance from you "),
           _c("strong", { staticStyle: { color: "#008cff" } }, [
+            _vm._v("(" + _vm._s(_vm.address_logged) + ") : ")
+          ]),
+          _c("h5", { staticStyle: { color: "#008cff" } }, [
             _vm._v(_vm._s(_vm.distance_value) + " KM")
           ])
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-10" }, [
+      _c("div", { staticClass: "col-8" }, [
         _c("div", { staticClass: "form-group" }, [
           _c("input", {
             directives: [
@@ -52442,12 +52524,17 @@ var render = function() {
             domProps: { value: _vm.distance_value },
             on: {
               change: function($event) {
-                _vm.getShopsByDistance()
+                _vm.getShops()
               },
               __r: function($event) {
                 _vm.distance_value = $event.target.value
               }
             }
+          }),
+          _vm._v(" "),
+          _c("div", {
+            staticStyle: { display: "none" },
+            attrs: { id: "googleMap" }
           })
         ])
       ])
@@ -52476,13 +52563,26 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c(
-                    "h5",
-                    {
-                      staticClass: "card-title text-primary",
-                      attrs: { slot: "shop_name" },
-                      slot: "shop_name"
-                    },
-                    [_vm._v(_vm._s(shop.name))]
+                    "span",
+                    { attrs: { slot: "shop_name" }, slot: "shop_name" },
+                    [
+                      _c("h5", { staticClass: "card-title text-primary" }, [
+                        _vm._v(_vm._s(shop.name))
+                      ]),
+                      _vm._v(" "),
+                      _c("strong", [_vm._v("ADDRESS :")]),
+                      _vm._v(" "),
+                      _c("span", { staticStyle: { color: "#008cff" } }, [
+                        _vm._v(_vm._s(shop.address))
+                      ]),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("strong", [_vm._v("DISTANCE :")]),
+                      _vm._v(" "),
+                      _c("span", { staticStyle: { color: "#008cff" } }, [
+                        _vm._v(_vm._s(Math.round(shop.distance)) + " KM")
+                      ])
+                    ]
                   ),
                   _vm._v(" "),
                   _c(
@@ -52642,6 +52742,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -52721,13 +52824,20 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c(
-                  "h5",
-                  {
-                    staticClass: "card-title text-primary",
-                    attrs: { slot: "shop_name" },
-                    slot: "shop_name"
-                  },
-                  [_vm._v(_vm._s(shop.name))]
+                  "span",
+                  { attrs: { slot: "shop_name" }, slot: "shop_name" },
+                  [
+                    _c("h5", { staticClass: "card-title text-primary" }, [
+                      _vm._v(_vm._s(shop.name))
+                    ]),
+                    _vm._v(" "),
+                    _c("strong", [_vm._v("ADDRESS :")]),
+                    _vm._v(" "),
+                    _c("span", { staticStyle: { color: "#008cff" } }, [
+                      _vm._v(_vm._s(shop.address))
+                    ]),
+                    _c("br")
+                  ]
                 ),
                 _vm._v(" "),
                 _c(
@@ -52997,19 +53107,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       shop: {
         name: "",
-        selectedImage: null,
-        address: ""
+        selectedImage: null /* ,
+                            address: "" */
       },
       shop_update: {
         name: "",
-        selectedImage: null,
-        address: ""
+        selectedImage: null /* ,
+                            address: "" */
       },
       list_datatable_fields: ["Name", "Image", "Address", "Actions"],
       shops: []
@@ -53022,13 +53141,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   methods: {
     init_components_forms: function init_components_forms() {
+      $("#dropdown_action_shops").dropdown();
       $("#add_shop_form").validate();
       $("#update_shop_form").validate();
     },
     getShops: function getShops() {
       var _this = this;
 
-      axios.get("shops-list").then(function (response) {
+      axios.get("shops").then(function (response) {
         _this.shops = response.data.shops;
         Vue.nextTick(function () {
           Event.$emit("init-datatable", "shops_list");
@@ -53041,45 +53161,50 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     addShop: function addShop() {
       var _this2 = this;
 
-      if (this.shop.name != "" && this.shop.selectedImage != "" && this.shop.address != "") {
-        var formData = new FormData();
-        formData.append("name", this.shop.name);
-        formData.append("address", this.shop.address);
-        formData.append("selectedImage", this.shop.selectedImage);
-        axios.post("shops", formData).then(function (response) {
-          _this2.reset();
-          _this2.refreshTable();
-          Event.$emit("hide-modal-normal", "add-modal");
-          Event.$emit("swal-message", "Add Shop", response.data.msg, "success", 2000);
-        }).catch(function (error) {
-          Event.$emit("hide-modal-normal", "add-modal");
-          Event.$emit("swal-message", "Add Shop", "Error Axios ! " + error, "error", 2000);
-        });
-      }
+      if (this.shop.name != "" && this.shop.selectedImage != "" /* &&
+                                                                this.shop.address != "" */
+      ) {
+          var formData = new FormData();
+          formData.append("name", this.shop.name);
+          //formData.append("address", this.shop.address);
+          formData.append("selectedImage", this.shop.selectedImage);
+          axios.post("shops", formData).then(function (response) {
+            _this2.reset();
+            _this2.refreshTable();
+            Event.$emit("hide-modal-normal", "add-modal");
+            Event.$emit("swal-message", "Add Shop", response.data.msg, "success", 2000);
+          }).catch(function (error) {
+            Event.$emit("hide-modal-normal", "add-modal");
+            Event.$emit("swal-message", "Add Shop", "Error Axios ! " + error, "error", 2000);
+          });
+        }
     },
-    initUpdateUser: function initUpdateUser(index) {
+    initUpdateShop: function initUpdateShop(index) {
       this.shop_update = this.shops[index];
       $("#update-modal").modal("show");
     },
     updateShop: function updateShop() {
       var _this3 = this;
 
-      var formData = new FormData();
-      formData.append("id", this.shop_update.id);
-      formData.append("name", this.shop_update.name);
-      formData.append("address", this.shop_update.address);
-      formData.append("selectedImage", this.shop_update.selectedImage);
-      axios.post("update-shop", formData).then(function (response) {
-        if (response.data.image_upload == true) {
-          _this3.refreshTable();
+      if (this.shop_update.name != "" && this.shop_update.selectedImage != "" /* &&
+                                                                              this.shop.address != "" */
+      ) {
+          var formData = new FormData();
+          formData.append("id", this.shop_update.id);
+          formData.append("name", this.shop_update.name);
+          //formData.append("address", this.shop_update.address);
+          formData.append("selectedImage", this.shop_update.selectedImage);
+          axios.post("update-shop", formData).then(function (response) {
+            if (response.data.image_upload == true) {
+              _this3.refreshTable();
+            }
+            Event.$emit("hide-modal-normal", "update-modal");
+            Event.$emit("swal-message", "Update Shop", response.data.msg, "success", 2000);
+          }).catch(function (error) {
+            Event.$emit("hide-modal-normal", "update-modal");
+            Event.$emit("swal-message", "Update Shop", "Error Axios ! " + error, "error", 2000);
+          });
         }
-        _this3.reset();
-        Event.$emit("hide-modal-normal", "update-modal");
-        Event.$emit("swal-message", "Update Shop", response.data.msg, "success", 2000);
-      }).catch(function (error) {
-        Event.$emit("hide-modal-normal", "update-modal");
-        Event.$emit("swal-message", "Update Shop", "Error Axios ! " + error, "error", 2000);
-      });
     },
     removeShop: function removeShop(index) {
       var _this4 = this;
@@ -53111,7 +53236,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     reset: function reset() {
       this.shop.name = "";
       this.shop.selectedImage = "";
-      this.shop.address = "";
+      //this.shop.address = "";
     },
     onSelectedImage: function onSelectedImage(event) {
       this.shop.selectedImage = event.target.files[0];
@@ -53144,17 +53269,65 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c(
-              "button",
-              {
-                staticClass: "btn btn-primary waves-effect waves-light m-1",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    _vm.initAddShop()
-                  }
-                }
-              },
-              [_c("i", { staticClass: "fa fa-plus" }), _vm._v(" ADD SHOP")]
+              "div",
+              { staticClass: "btn-group m-1", attrs: { role: "group" } },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-primary waves-effect waves-light dropdown-toggle",
+                    attrs: {
+                      type: "button",
+                      "data-toggle": "dropdown",
+                      "aria-haspopup": "true",
+                      "aria-expanded": "false",
+                      id: "dropdown_action_shops"
+                    }
+                  },
+                  [_vm._v("\n                Actions\n              ")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "dropdown-menu" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "dropdown-item",
+                      staticStyle: { cursor: "pointer" },
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.initAddShop()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-plus" }),
+                      _vm._v(" ADD SHOP")
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "dropdown-divider" }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "dropdown-item",
+                      staticStyle: { cursor: "pointer" },
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.refreshTable()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-refresh" }),
+                      _vm._v(" REFRESH TABLE")
+                    ]
+                  )
+                ])
+              ]
             ),
             _vm._v(" "),
             _c("br"),
@@ -53207,7 +53380,22 @@ var render = function() {
                               )
                             ]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(shop.address))]),
+                            _c("td", [
+                              _vm._v(_vm._s(shop.address) + " "),
+                              _c(
+                                "strong",
+                                { staticStyle: { color: "#008cff" } },
+                                [
+                                  _vm._v(
+                                    "(" +
+                                      _vm._s(shop.lat) +
+                                      ", " +
+                                      _vm._s(shop.lng) +
+                                      ")"
+                                  )
+                                ]
+                              )
+                            ]),
                             _vm._v(" "),
                             _c("td", [
                               _c(
@@ -53218,7 +53406,7 @@ var render = function() {
                                   attrs: { type: "button" },
                                   on: {
                                     click: function($event) {
-                                      _vm.initUpdateUser(index)
+                                      _vm.initUpdateShop(index)
                                     }
                                   }
                                 },
@@ -53379,61 +53567,6 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "form-group row" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "col-sm-2 col-form-label",
-                      attrs: { for: "add_shop_address" }
-                    },
-                    [_vm._v("Address")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-10" }, [
-                    _c("textarea", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.shop.address,
-                          expression: "shop.address"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        rows: "4",
-                        id: "add_shop_address",
-                        name: "add_shop_address",
-                        required: ""
-                      },
-                      domProps: { value: _vm.shop.address },
-                      on: {
-                        keyup: function($event) {
-                          if (
-                            !("button" in $event) &&
-                            _vm._k(
-                              $event.keyCode,
-                              "enter",
-                              13,
-                              $event.key,
-                              "Enter"
-                            )
-                          ) {
-                            return null
-                          }
-                          _vm.addShop()
-                        },
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.shop, "address", $event.target.value)
-                        }
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
                 _c("div", { staticClass: "form-footer" }, [
                   _c(
                     "button",
@@ -53586,65 +53719,6 @@ var render = function() {
                         accept: "image/*"
                       },
                       on: { change: _vm.onSelectedImageUpdate }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group row" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "col-sm-2 col-form-label",
-                      attrs: { for: "update_shop_address" }
-                    },
-                    [_vm._v("Address")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-10" }, [
-                    _c("textarea", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.shop_update.address,
-                          expression: "shop_update.address"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        rows: "4",
-                        id: "update_shop_address",
-                        name: "update_shop_address",
-                        required: ""
-                      },
-                      domProps: { value: _vm.shop_update.address },
-                      on: {
-                        keyup: function($event) {
-                          if (
-                            !("button" in $event) &&
-                            _vm._k(
-                              $event.keyCode,
-                              "enter",
-                              13,
-                              $event.key,
-                              "Enter"
-                            )
-                          ) {
-                            return null
-                          }
-                          _vm.updateShop()
-                        },
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.shop_update,
-                            "address",
-                            $event.target.value
-                          )
-                        }
-                      }
                     })
                   ])
                 ]),
@@ -54351,8 +54425,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       name: "",
       email: "",
       password: "",
-      confirm_password: "",
-      address: ""
+      confirm_password: ""
+      //address: ""
     };
   },
   mounted: function mounted() {
@@ -54376,9 +54450,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             required: true,
             minlength: 6,
             equalTo: "#password"
-          },
-          address: "required"
-        },
+            //address: "required"
+          } },
         messages: {
           name: "Please enter your First & Lastname",
           email: {
@@ -54393,33 +54466,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             required: "Please provide a password",
             minlength: "Your password must be at least 6 characters long",
             equalTo: "Please enter the same password as above"
-          },
-          address: "Please enter your address"
-        }
+            //address: "Please enter your address"
+          } }
       });
     },
     register: function register() {
       var _this = this;
 
-      if (this.name != "" && this.email != "" && this.password != "" && this.address != "") {
-        axios.post("register", {
-          name: this.name,
-          email: this.email,
-          password: this.password,
-          address: this.address
-        }).then(function (response) {
-          _this.color_alert = "alert alert-icon-success alert-dismissible alert-round";
-          _this.icon_alert = "alert-icon icon-part-success icon-part-round";
-          _this.msg_login_success = response.data.msg;
-          setTimeout(_this.redirectFunction, 2000);
-        }).catch(function (error) {
-          _this.email = "";
-          _this.password = "";
-          _this.color_alert = "alert alert-icon-danger alert-dismissible alert-round";
-          _this.icon_alert = "alert-icon icon-part-danger icon-part-round";
-          _this.msg_login_success = error.response.data.msg;
-        });
-      }
+      if (this.name != "" && this.email != "" && this.password != "" /* &&
+                                                                     this.address != "" */
+      ) {
+          axios.post("register", {
+            name: this.name,
+            email: this.email,
+            password: this.password /* ,
+                                    address: this.address */
+          }).then(function (response) {
+            _this.color_alert = "alert alert-icon-success alert-dismissible alert-round";
+            _this.icon_alert = "alert-icon icon-part-success icon-part-round";
+            _this.msg_login_success = response.data.msg;
+            setTimeout(_this.redirectFunction, 2000);
+          }).catch(function (error) {
+            _this.email = "";
+            _this.password = "";
+            _this.color_alert = "alert alert-icon-danger alert-dismissible alert-round";
+            _this.icon_alert = "alert-icon icon-part-danger icon-part-round";
+            _this.msg_login_success = error.response.data.msg;
+          });
+        }
     },
     redirectFunction: function redirectFunction() {
       this.$router.push({ path: "/auth/login" });
@@ -54635,43 +54709,6 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group row" }, [
-        _c("label", { staticClass: "sr-only", attrs: { for: "address" } }, [
-          _vm._v("Address")
-        ]),
-        _vm._v(" "),
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.address,
-              expression: "address"
-            }
-          ],
-          staticClass: "form-control form-control-rounded",
-          attrs: { name: "address", id: "address", placeholder: "Address" },
-          domProps: { value: _vm.address },
-          on: {
-            keyup: function($event) {
-              if (
-                !("button" in $event) &&
-                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-              ) {
-                return null
-              }
-              _vm.register()
-            },
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.address = $event.target.value
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
       _c(
         "button",
         {
@@ -54755,6 +54792,1161 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(116)
+}
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(114)
+/* template */
+var __vue_template__ = __webpack_require__(115)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/users/Musers.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-8175a2e6", Component.options)
+  } else {
+    hotAPI.reload("data-v-8175a2e6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 114 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      user: {
+        name: "",
+        email: "",
+        password: "",
+        role: ""
+      },
+      user_update: {
+        name: "",
+        email: "",
+        password: "",
+        role: ""
+      },
+      list_datatable_fields: ["Name", "Email", "Address", "Actions"],
+      users: []
+    };
+  },
+  mounted: function mounted() {
+    this.init_components_forms();
+    this.getUsers();
+  },
+
+  methods: {
+    init_components_forms: function init_components_forms() {
+      $("#dropdown_action_users").dropdown();
+      $("#add_user_form").validate();
+      $("#update_user_form").validate();
+    },
+    getUsers: function getUsers() {
+      var _this = this;
+
+      axios.get("users").then(function (response) {
+        _this.users = response.data.users;
+        Vue.nextTick(function () {
+          Event.$emit("init-datatable", "users_list");
+        });
+      });
+    },
+    initAdduser: function initAdduser() {
+      Event.$emit("show-modal-normal", "add-modal");
+    },
+    addUser: function addUser() {
+      var _this2 = this;
+
+      if (this.user.name != "" && this.user.email != "" && this.user.password != "" && this.user.role != "") {
+        var formData = new FormData();
+        formData.append("name", this.user.name);
+        formData.append("email", this.user.email);
+        formData.append("password", this.user.password);
+        formData.append("role", this.user.role);
+        axios.post("users", formData).then(function (response) {
+          _this2.reset();
+          _this2.refreshTable();
+          Event.$emit("hide-modal-normal", "add-modal");
+          Event.$emit("swal-message", "Add User", response.data.msg, "success", 2000);
+        }).catch(function (error) {
+          Event.$emit("hide-modal-normal", "add-modal");
+          Event.$emit("swal-message", "Add User", "Error Axios ! " + error, "error", 2000);
+        });
+      }
+    },
+    initUpdateUser: function initUpdateUser(index) {
+      this.user_update = this.users[index];
+      $("#update-modal").modal("show");
+    },
+    updateUser: function updateUser() {
+      if (this.user_update.name != "" && this.user_update.email != "" && this.user_update.role != "") {
+        axios.patch("users/" + this.user_update.id, {
+          name: this.user_update.name,
+          email: this.user_update.email,
+          password: this.user_update.password,
+          role: this.user_update.role
+        }).then(function (response) {
+          Event.$emit("hide-modal-normal", "update-modal");
+          Event.$emit("swal-message", "Update User", response.data.msg, "success", 2000);
+        }).catch(function (error) {
+          Event.$emit("hide-modal-normal", "update-modal");
+          Event.$emit("swal-message", "Update User", "Error Axios ! " + error, "error", 2000);
+        });
+      }
+    },
+    removeUser: function removeUser(index) {
+      var _this3 = this;
+
+      swal({
+        title: "Remove User ?",
+        text: "Are you sure? !",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      }).then(function (willDelete) {
+        if (willDelete) {
+          axios.delete("users/" + _this3.users[index].id).then(function (response) {
+            _this3.users.splice(index, 1);
+            Event.$emit("swal-message", "Remove", response.data.message, "success", 2000);
+          }).catch(function (error) {});
+        } else {
+          Event.$emit("swal-message", "Canceled", "Action canceled !", "error", 2000);
+        }
+      });
+    },
+    destroyDataTable: function destroyDataTable() {
+      Event.$emit("destroy-datatable");
+    },
+    refreshTable: function refreshTable() {
+      this.destroyDataTable();
+      this.getUsers();
+    },
+    reset: function reset() {
+      this.user.name = "";
+      this.user.name = "";
+      this.user.email = "";
+      this.user.password = "";
+      this.user.role = "";
+    }
+  }
+});
+
+/***/ }),
+/* 115 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "row" },
+    [
+      _c("div", { staticClass: "col-lg-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "div",
+              { staticClass: "btn-group m-1", attrs: { role: "group" } },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-primary waves-effect waves-light dropdown-toggle",
+                    attrs: {
+                      type: "button",
+                      "data-toggle": "dropdown",
+                      "aria-haspopup": "true",
+                      "aria-expanded": "false",
+                      id: "dropdown_action_users"
+                    }
+                  },
+                  [_vm._v("\n                Actions\n              ")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "dropdown-menu" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "dropdown-item",
+                      staticStyle: { cursor: "pointer" },
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.initAdduser()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-plus" }),
+                      _vm._v(" ADD USER")
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "dropdown-divider" }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "dropdown-item",
+                      staticStyle: { cursor: "pointer" },
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.refreshTable()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-refresh" }),
+                      _vm._v(" REFRESH TABLE")
+                    ]
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "table-responsive" },
+              [
+                _c(
+                  "parts-data-table",
+                  {
+                    attrs: {
+                      id: "users_list",
+                      list_datatable_fields: _vm.list_datatable_fields
+                    }
+                  },
+                  _vm._l(_vm.users, function(user, index) {
+                    return _vm.users.length > 0
+                      ? _c(
+                          "tr",
+                          {
+                            key: index,
+                            attrs: { slot: "tbody_tr_table" },
+                            slot: "tbody_tr_table"
+                          },
+                          [
+                            _c("td", [_vm._v(_vm._s(user.name))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c("a", { attrs: { href: user.email } }, [
+                                _vm._v(_vm._s(user.email))
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(_vm._s(user.address) + " "),
+                              _c(
+                                "strong",
+                                { staticStyle: { color: "#008cff" } },
+                                [
+                                  _vm._v(
+                                    "(" +
+                                      _vm._s(user.lat) +
+                                      ", " +
+                                      _vm._s(user.lng) +
+                                      ")"
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-warning waves-effect waves-light m-1",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.initUpdateUser(index)
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fa fa-edit" })]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-danger waves-effect waves-light m-1",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.removeUser(index)
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fa fa-trash" })]
+                              )
+                            ])
+                          ]
+                        )
+                      : _vm._e()
+                  })
+                )
+              ],
+              1
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("parts-modal", { attrs: { id: "add-modal" } }, [
+        _c(
+          "div",
+          {
+            staticClass: "modal-header",
+            attrs: { slot: "header_modal" },
+            slot: "header_modal"
+          },
+          [
+            _c("h5", { staticClass: "modal-title" }, [
+              _c("i", { staticClass: "fa fa-plus" }),
+              _vm._v(" Add User !")
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: {
+                  type: "button",
+                  "data-dismiss": "modal",
+                  "aria-label": "Close"
+                }
+              },
+              [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "modal-body",
+            attrs: { slot: "body_modal" },
+            slot: "body_modal"
+          },
+          [
+            _c(
+              "form",
+              {
+                attrs: {
+                  id: "add_user_form",
+                  method: "post",
+                  action: "javascript:void(0)"
+                }
+              },
+              [
+                _c("div", { staticClass: "form-group row" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-sm-2 col-form-label",
+                      attrs: { for: "add_user_name" }
+                    },
+                    [_vm._v("Name")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-10" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.user.name,
+                          expression: "user.name"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "add_user_name",
+                        name: "add_user_name",
+                        required: ""
+                      },
+                      domProps: { value: _vm.user.name },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !("button" in $event) &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          _vm.addUser()
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.user, "name", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-sm-2 col-form-label",
+                      attrs: { for: "add_user_email" }
+                    },
+                    [_vm._v("Email")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-10" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.user.email,
+                          expression: "user.email"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "email",
+                        name: "add_user_email",
+                        id: "add_user_email",
+                        placeholder: "E-mail address",
+                        required: ""
+                      },
+                      domProps: { value: _vm.user.email },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !("button" in $event) &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          _vm.addUser()
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.user, "email", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-sm-2 col-form-label",
+                      attrs: { for: "add_user_password" }
+                    },
+                    [_vm._v("Password")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-10" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.user.password,
+                          expression: "user.password"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "password",
+                        name: "add_user_password",
+                        id: "add_user_password",
+                        placeholder: "Password",
+                        required: ""
+                      },
+                      domProps: { value: _vm.user.password },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !("button" in $event) &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          _vm.addUser()
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.user, "password", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-sm-2 col-form-label",
+                      attrs: { for: "add_user_role" }
+                    },
+                    [_vm._v("Role")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-10" }, [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.role,
+                            expression: "user.role"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { id: "add_user_role", required: "" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.user,
+                              "role",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "super_admin" } }, [
+                          _vm._v("Super Administrator")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "option",
+                          { attrs: { value: "user", selected: "" } },
+                          [_vm._v("User")]
+                        )
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("CANCEL")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "submit" },
+                      on: {
+                        click: function($event) {
+                          _vm.addUser()
+                        }
+                      }
+                    },
+                    [_vm._v("ADD")]
+                  )
+                ])
+              ]
+            )
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("parts-modal", { attrs: { id: "update-modal" } }, [
+        _c(
+          "div",
+          {
+            staticClass: "modal-header",
+            attrs: { slot: "header_modal" },
+            slot: "header_modal"
+          },
+          [
+            _c("h5", { staticClass: "modal-title" }, [
+              _c("i", { staticClass: "fa fa-plus" }),
+              _vm._v(" Update User !")
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: {
+                  type: "button",
+                  "data-dismiss": "modal",
+                  "aria-label": "Close"
+                }
+              },
+              [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "modal-body",
+            attrs: { slot: "body_modal" },
+            slot: "body_modal"
+          },
+          [
+            _c(
+              "form",
+              {
+                attrs: {
+                  id: "update_user_form",
+                  method: "post",
+                  action: "javascript:void(0)"
+                }
+              },
+              [
+                _c("div", { staticClass: "form-group row" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-sm-2 col-form-label",
+                      attrs: { for: "update_user_name" }
+                    },
+                    [_vm._v("Name")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-10" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.user_update.name,
+                          expression: "user_update.name"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "update_user_name",
+                        name: "update_user_name",
+                        required: ""
+                      },
+                      domProps: { value: _vm.user_update.name },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !("button" in $event) &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          _vm.updateUser()
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.user_update, "name", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-sm-2 col-form-label",
+                      attrs: { for: "update_user_email" }
+                    },
+                    [_vm._v("Email")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-10" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.user_update.email,
+                          expression: "user_update.email"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "email",
+                        name: "update_user_email",
+                        id: "update_user_email",
+                        placeholder: "E-mail address",
+                        required: ""
+                      },
+                      domProps: { value: _vm.user_update.email },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !("button" in $event) &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          _vm.updateUser()
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.user_update,
+                            "email",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-sm-2 col-form-label",
+                      attrs: { for: "update_user_password" }
+                    },
+                    [_vm._v("Password")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-10" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.user_update.password,
+                          expression: "user_update.password"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "password",
+                        name: "update_user_password",
+                        id: "update_user_password",
+                        placeholder: "Password"
+                      },
+                      domProps: { value: _vm.user_update.password },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !("button" in $event) &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          _vm.updateUser()
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.user_update,
+                            "password",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-sm-2 col-form-label",
+                      attrs: { for: "update_user_role" }
+                    },
+                    [_vm._v("Role")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-10" }, [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user_update.role,
+                            expression: "user_update.role"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          name: "update_user_role",
+                          id: "update_user_role",
+                          required: ""
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.user_update,
+                              "role",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "super_admin" } }, [
+                          _vm._v("Super Administrator")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "user" } }, [
+                          _vm._v("User")
+                        ])
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("CANCEL")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "submit" },
+                      on: {
+                        click: function($event) {
+                          _vm.updateUser()
+                        }
+                      }
+                    },
+                    [_vm._v("UPDATE")]
+                  )
+                ])
+              ]
+            )
+          ]
+        )
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("i", { staticClass: "fa fa-table" }),
+      _vm._v(" Users List")
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-8175a2e6", module.exports)
+  }
+}
+
+/***/ }),
+/* 116 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(117);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(14)("1251359d", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8175a2e6\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Musers.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8175a2e6\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Musers.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 117 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(13)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.table > tbody > tr > td {\r\n  vertical-align: middle;\n}\r\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

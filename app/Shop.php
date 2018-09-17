@@ -8,7 +8,7 @@ class Shop extends Model
 {
     protected $table = 'shops';
     protected $primaryKey = 'id';
-    protected $fillable = ['name', 'image', 'address'];
+    protected $fillable = ['name', 'image', 'address', 'lat', 'lng'];
 
     public function listprefrredshops()
     {
