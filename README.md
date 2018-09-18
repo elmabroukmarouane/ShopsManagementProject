@@ -28,13 +28,10 @@ The application has several modules namely :
 Here is the link for Live demo [Live Demo](http://elmabroukmarouane.pw/ShopsManagementProject)
 
 -   Account :
-    Super Administrator :
-    Email : [super_admin@mail.com](super_admin@mail.com)
-    Password : 123456
 
-User :
-Email : [user@mail.com](user@mail.com)
-Password : 123456
+Super Administrator : Email : [super_admin@mail.com](super_admin@mail.com) Password : 123456
+
+User : Email : [user@mail.com](user@mail.com) Password : 123456
 
 ## Contact :
 
